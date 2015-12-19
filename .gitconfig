@@ -1,0 +1,24 @@
+[user]
+	name = Hugo Tunius
+	email = hugo.tunius@gmail.com
+[core]
+	excludesfile = /Users/hugotunius/.gitignore_global
+	editor = vim
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[alias]
+    log = log --topo-order --decorate
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --date=short' --abbrev-commit
+
+[format]
+    pretty = %C(red)%h %C(green)%an \n%C(white)%s\n
+[color]
+    ui = true
+
+[diff "localizablestrings"]
+    textconv = "iconv -f utf-16 -t utf-8"

@@ -1,0 +1,44 @@
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="agnoster"
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias gs="git status"
+alias glc="git pull origin \$(current_branch)"
+alias gpc="git push origin \$(current_branch)"
+alias gbr="git branch -r"
+alias grm="git branch --merged | grep -v \"\*\" | xargs -n 1 git branch -d"
+alias ll="ls -la"
+alias l="ls -l"
+alias tracert="traceroute"
+alias grep="grep --color=always"
+
+export UPDATE_ZSH_DAYS=1
+HIST_IGNORE_SPACE="true"
+plugins=(web-search git vagrant bundler osx zsh-syntax-highlighting jump docker)
+
+source $ZSH/oh-my-zsh.sh
+
+export PATH=/usr/local/share/python:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/sbin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/share/npm/bin
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export ZDOTDIR=$HOME
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+source /usr/local/bin/virtualenvwrapper.sh
+
+if [ -f ~/.zsh_local ]; then
+    source ~/.zsh_local
+fi

@@ -1,0 +1,43 @@
+set nocompatible               " be eMproved
+filetype off                   " required!
+        
+" Vundle 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'vim-ruby/vim-ruby'
+" Color Schemes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jnurmine/Zenburn'
+Bundle 'slim-template/vim-slim.git'
+call vundle#end()
+
+set number
+set shell=/bin/zsh\ -l
+syntax on
+filetype plugin indent on
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set backspace=indent,eol,start
+set cursorline
+set noswapfile
+set background=dark
+colorscheme solarized 
+
+" Remap
+vnoremap . :norm.<CR>
+inoremap jk <ESC>
+
+" Windows
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
