@@ -2,7 +2,7 @@ set nocompatible               " be eMproved
 filetype off                   " required!
         
 " Vundle 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
