@@ -36,10 +36,6 @@ export LANGUAGE=en_US.UTF-8
 export ZDOTDIR=$HOME
 export PIP_REQUIRE_VIRTUALENV=true
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-source /usr/local/bin/virtualenvwrapper.sh
-
 if [ -f ~/.zsh_local ]; then
     source ~/.zsh_local
 fi
