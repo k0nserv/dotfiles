@@ -23,7 +23,14 @@ alias grep="grep --color=always"
 
 export UPDATE_ZSH_DAYS=1
 HIST_IGNORE_SPACE="true"
-plugins=(virtualenvwrapper zsh-syntax-highlighting web-search git vagrant bundler osx jump)
+
+# Explicitly before plugins to allow ~/.zsh_local to append plugins
+export ZSH_PLUGINS="zsh-syntax-highlighting git vagrant bundler osx"
+if [ -f ~/.zsh_local ]; then
+    source ~/.zsh_local
+fi
+
+plugins=(`echo $ZSH_PLUGINS`)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -36,6 +43,3 @@ export LANGUAGE=en_US.UTF-8
 export ZDOTDIR=$HOME
 export PIP_REQUIRE_VIRTUALENV=true
 
-if [ -f ~/.zsh_local ]; then
-    source ~/.zsh_local
-fi
