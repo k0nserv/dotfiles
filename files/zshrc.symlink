@@ -23,11 +23,10 @@ alias grep="grep --color=always"
 
 export UPDATE_ZSH_DAYS=1
 HIST_IGNORE_SPACE="true"
-plugins=(web-search git vagrant bundler osx zsh-syntax-highlighting jump docker)
+plugins=(virtualenvwrapper zsh-syntax-highlighting web-search git vagrant bundler osx jump)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/usr/local/share/python:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/sbin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/share/npm/bin
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
