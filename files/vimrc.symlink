@@ -12,6 +12,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'IN3D/vim-raml'
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
