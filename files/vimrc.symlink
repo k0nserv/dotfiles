@@ -47,4 +47,5 @@ let NERDTreeIgnore = ['\.pyc$']
 " Ignores for Ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
-
+" You complete me
+let g:ycm_autoclose_preview_window_after_completion=1
