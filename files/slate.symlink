@@ -53,6 +53,8 @@ alias less-hyper cmd;alt;ctrl
 # Throw Bindings
 bind 1:${hyper-key}         throw 0 resize
 bind 2:${hyper-key}         throw 1 resize
+bind 3:${hyper-key}         throw 2 resize
+bind 3:${hyper-key}         throw 3 resize
 
 # Focus Bindings
 #bind right:cmd    focus right
