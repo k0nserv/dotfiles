@@ -50,3 +50,7 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 
 " You complete me
 let g:ycm_autoclose_preview_window_after_completion=1
+
+" Clipboard
+map <F2> :.w !pbcopy<CR><CR>
+map <F3> :r !pbpaste<CR>
