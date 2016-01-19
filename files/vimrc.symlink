@@ -1,7 +1,7 @@
 set nocompatible               " be eMproved
 filetype off                   " required!
-        
-" Vundle 
+
+" Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -31,7 +31,7 @@ set backspace=indent,eol,start
 set cursorline
 set noswapfile
 set background=dark
-colorscheme solarized 
+colorscheme solarized
 
 " Remap
 vnoremap . :norm.<CR>
@@ -55,3 +55,7 @@ let g:ycm_autoclose_preview_window_after_completion=1
 " Clipboard
 map <F2> :.w !pbcopy<CR><CR>
 map <F3> :r !pbpaste<CR>
+
+" Strip whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
+
