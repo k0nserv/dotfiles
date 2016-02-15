@@ -16,6 +16,7 @@ Plugin 'IN3D/vim-raml'
 Plugin 'keith/swift.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'airblade/vim-gitgutter'
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
