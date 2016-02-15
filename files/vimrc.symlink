@@ -46,14 +46,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Ignores for NERDTree
-let NERDTreeIgnore = ['\.pyc$']
-nnoremap <silent> <F7> :NERDTreeToggle<CR>
 " Ignores for Ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " You complete me
 let g:ycm_autoclose_preview_window_after_completion=1
+nnoremap <C-I> :CtrlPBufTag<CR>
 
 " Clipboard
 map <F2> :.w !pbcopy<CR><CR>
@@ -68,3 +66,7 @@ autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
 autocmd BufWritePost *.py call Flake8()
 let g:flake8_show_in_gutter=1
 let g:flake8_show_in_file=1
+
+" Ignores for NERDTree
+let NERDTreeIgnore = ['\.pyc$']
+nnoremap <silent> <F7> :NERDTreeToggle<CR>
