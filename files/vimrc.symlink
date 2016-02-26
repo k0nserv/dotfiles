@@ -78,5 +78,5 @@ let g:flake8_show_in_file=1
 let NERDTreeIgnore = ['\.pyc$']
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
 
-# Dash
+" Dash
 nmap <silent> <leader>d <Plug>DashSearch
