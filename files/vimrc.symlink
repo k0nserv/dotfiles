@@ -20,6 +20,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'wavded/vim-stylus'
+Plugin 'rizzatti/dash.vim'
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
@@ -39,6 +40,7 @@ set cursorline
 set noswapfile
 set background=dark
 set smartcase
+let mapleader = ','
 colorscheme solarized
 
 " Remap
@@ -75,3 +77,6 @@ let g:flake8_show_in_file=1
 " Ignores for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
+
+# Dash
+nmap <silent> <leader>d <Plug>DashSearch
