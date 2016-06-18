@@ -15,7 +15,7 @@ alias gs="git status"
 alias glc="git pull origin \$(current_branch)"
 alias gpc="git push origin \$(current_branch)"
 alias gpcfl="git push origin \$(current_branch) --force-with-lease"
-alias goops="git add -A . && git commit --amend --no-edit && gpc --force-with-lease"
+function goops { git add -A "$@" && git commit --amend --no-edit && gpcfl }
 alias gbr="git branch -r"
 alias grm="git branch --merged | grep -v \"\*\" | xargs -n 1 git branch -d"
 alias ll="ls -la"
