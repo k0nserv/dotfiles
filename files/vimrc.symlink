@@ -21,6 +21,7 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'wavded/vim-stylus'
 Plugin 'rizzatti/dash.vim'
+Plugin 'ngmy/vim-rubocop'
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
@@ -80,3 +81,8 @@ nnoremap <silent> <F7> :NERDTreeToggle<CR>
 
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
+
+" Help with performance for ruby files
+set lazyredraw
+set cursorline
+
