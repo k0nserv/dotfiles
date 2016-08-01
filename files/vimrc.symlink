@@ -60,6 +60,7 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 " You complete me
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <C-I> :CtrlPBufTag<CR>
+let g:ycm_server_keep_logfiles=1
 
 " Clipboard
 map <F2> :.w !pbcopy<CR><CR>
@@ -70,14 +71,13 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 
 " Vim-flake8
-autocmd FileType python map <buffer> <F8> :call Flake8()<CR>
 autocmd BufWritePost *.py call Flake8()
 let g:flake8_show_in_gutter=1
 let g:flake8_show_in_file=1
 
 " Ignores for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
-nnoremap <silent> <F7> :NERDTreeToggle<CR>
+nnoremap <silent> <F8> :NERDTreeToggle<CR>
 
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
