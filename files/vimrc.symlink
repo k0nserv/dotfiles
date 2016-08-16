@@ -75,6 +75,8 @@ autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufWritePost *.py call Flake8()
 let g:flake8_show_in_gutter=1
 let g:flake8_show_in_file=1
+" Use flake8 from active virtualenv
+let g:flake8_cmd="flake8"
 
 " Ignores for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
