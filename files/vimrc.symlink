@@ -55,6 +55,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Movement
+nnoremap J 6j
+nnoremap K 6k
+nnoremap H 6h
+nnoremap L 6l
+
 set ruler
 set colorcolumn=120
 
