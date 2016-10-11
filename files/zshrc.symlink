@@ -27,8 +27,13 @@ alias vimrc='vim ~/.vimrc'
 export UPDATE_ZSH_DAYS=1
 HIST_IGNORE_SPACE="true"
 
+# Activate vim mode
+export MODE_INDICATOR='[NORMAL]'
+bindkey -v
+export KEYTIMEOUT=1
+
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
-export ZSH_PLUGINS="zsh-syntax-highlighting git vagrant bundler osx"
+export ZSH_PLUGINS="zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode"
 if [ -f ~/.zsh_local ]; then
     source ~/.zsh_local
 fi
@@ -36,6 +41,7 @@ fi
 plugins=(`echo $ZSH_PLUGINS`)
 
 source $ZSH/oh-my-zsh.sh
+
 
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
