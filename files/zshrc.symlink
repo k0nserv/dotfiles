@@ -29,8 +29,9 @@ HIST_IGNORE_SPACE="true"
 
 # Activate vim mode
 export MODE_INDICATOR='[NORMAL]'
+export KEYTIMEOUT=10
 bindkey -v
-export KEYTIMEOUT=1
+bindkey -M viins 'jk' vi-cmd-mode
 
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
 export ZSH_PLUGINS="zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode"
