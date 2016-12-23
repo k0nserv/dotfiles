@@ -54,3 +54,6 @@ export LANGUAGE=en_US.UTF-8
 export ZDOTDIR=$HOME
 export PIP_REQUIRE_VIRTUALENV=true
 
+
+export NVM_DIR="/Users/hugotunius/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
