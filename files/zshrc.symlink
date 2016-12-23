@@ -32,6 +32,7 @@ export MODE_INDICATOR='[NORMAL]'
 export KEYTIMEOUT=10
 bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
+bindkey '^[[Z' reverse-menu-complete # Unbreak shift-tab
 
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
 export ZSH_PLUGINS="zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode"
