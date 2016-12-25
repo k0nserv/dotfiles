@@ -23,6 +23,8 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'wavded/vim-stylus'
 Plugin 'rizzatti/dash.vim'
 Plugin 'ngmy/vim-rubocop'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
@@ -44,7 +46,8 @@ set background=dark
 set smartcase
 let mapleader = ','
 colorscheme solarized
-
+set list
+set listchars=eol:¬
 " Remap
 vnoremap . :norm.<CR>
 inoremap jk <ESC>
@@ -79,7 +82,6 @@ map <F3> :r !pbpaste<CR>
 " Strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-
 " Vim-flake8
 autocmd BufWritePost *.py call Flake8()
 let g:flake8_show_in_gutter=1
@@ -97,7 +99,8 @@ nnoremap <silent> <F8> :NERDTreeToggle<CR>
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
 
-" Make ruby fast again!
+" vim-jsx
+let g:jsx_ext_required = 0
 set lazyredraw
 
 let g:ycm_filetype_specific_completion_to_disable = {
