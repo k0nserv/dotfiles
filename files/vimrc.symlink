@@ -89,6 +89,9 @@ let g:flake8_show_in_file=1
 " Use flake8 from active virtualenv
 let g:flake8_cmd="flake8"
 
+" vim-rubocop
+autocmd FileType ruby map <buffer> <F8> :RuboCop<CR>
+
 " Ignores for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
 nnoremap <silent> <F8> :NERDTreeToggle<CR>
@@ -98,8 +101,14 @@ nmap <silent> <leader>d <Plug>DashSearch
 
 " vim-jsx
 let g:jsx_ext_required = 0
-
-" Help with performance for ruby files
 set lazyredraw
-set cursorline
 
+let g:ycm_filetype_specific_completion_to_disable = {
+  \'ruby': 1
+  \}
+
+augroup ft_rb
+    au!
+    " fix the SLOOOW syntax highlighting
+    au FileType ruby setlocal re=1 foldmethod=manual nocursorline
+augroup END
