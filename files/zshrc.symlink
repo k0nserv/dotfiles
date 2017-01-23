@@ -23,6 +23,7 @@ alias l="ls -l"
 alias tracert="traceroute"
 alias grep="grep --color=always"
 alias vimrc='vim ~/.vimrc'
+alias zshrc='vim ~/.zshrc'
 
 export UPDATE_ZSH_DAYS=1
 HIST_IGNORE_SPACE="true"
