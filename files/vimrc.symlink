@@ -88,6 +88,7 @@ nmap <leader>T :enew<CR>
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
 nmap <leader>bl :ls<CR>
+nmap <leader>bd :bd<CR>
 
 set ruler
 set colorcolumn=120
