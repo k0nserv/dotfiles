@@ -18,13 +18,23 @@ alias gpcfl="git push origin \$(current_branch) --force-with-lease"
 function goops { git add -A "$@" && git commit --amend --no-edit && gpcfl }
 alias gbr="git branch -r"
 alias grm="git branch --merged | grep -v \"\*\" | xargs -n 1 git branch -d"
-alias ll="ls -la"
-alias l="ls -l"
 alias tracert="traceroute"
 alias grep="grep --color=always"
 alias vimrc='vim ~/.vimrc'
 alias zshrc='vim ~/.zshrc'
 alias weather='curl wttr.in/Edinburgh'
+alias work='vim .'
+
+# Docker aliases
+COMPOSE='docker-compose'
+DOCKER='docker'
+alias dcu='$COMPOSE up'
+alias dcb='$COMPOSE build'
+alias dcd='$COMPOSE down'
+alias db='$DOCKER build .'
+alias dl='$DOCKER pull'
+alias dps='$DOCKER ps'
+
 
 export UPDATE_ZSH_DAYS=1
 HIST_IGNORE_SPACE="true"
@@ -46,6 +56,9 @@ plugins=(`echo $ZSH_PLUGINS`)
 
 source $ZSH/oh-my-zsh.sh
 
+# After plugins load to override other `d`
+alias d='$DOCKER'
+alias dc='$COMPOSE'
 
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
