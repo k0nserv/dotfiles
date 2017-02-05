@@ -50,6 +50,7 @@ let mapleader = ','
 colorscheme solarized
 set list
 set listchars=eol:¬
+
 " Remap
 vnoremap . :norm.<CR>
 inoremap jk <ESC>
@@ -66,6 +67,13 @@ nnoremap K 6k
 nnoremap H 6h
 nnoremap L 6l
 
+" Buffers
+set hidden
+nmap <leader>T :enew<CR>
+nmap <leader>l :bnext<CR>
+nmap <leader>h :bprevious<CR>
+nmap <leader>bl :ls<CR>
+
 set ruler
 set colorcolumn=120
 
@@ -81,6 +89,8 @@ let g:airline_theme = 'powerlineish'
 
 " Ignores for Ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_working_path_mode = 'r'
+nmap <leader>bb :CtrlPBuffer<cr>
 
 " You complete me
 let g:ycm_autoclose_preview_window_after_completion=1
