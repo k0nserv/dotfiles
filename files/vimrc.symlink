@@ -46,7 +46,7 @@ set cursorline
 set noswapfile
 set background=dark
 set smartcase
-let mapleader = ','
+let mapleader = ' '
 colorscheme solarized
 set list
 set listchars=eol:¬
@@ -54,6 +54,20 @@ set listchars=eol:¬
 " Remap
 vnoremap . :norm.<CR>
 inoremap jk <ESC>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+nnoremap <Leader>s :sv<CR>
+nnoremap <Leader>v :vs<CR>
+
+
 
 " Windows
 nnoremap <C-J> <C-W><C-J>
