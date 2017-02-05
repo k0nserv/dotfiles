@@ -4,8 +4,8 @@ filetype off                   " required!
 " Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'gmarik/Vundle.vim'
+Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -15,20 +15,18 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'IN3D/vim-raml'
 Plugin 'keith/swift.vim'
-Plugin 'nvie/vim-flake8'
+Plugin 'w0rp/ale'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'wavded/vim-stylus'
 Plugin 'rizzatti/dash.vim'
-Plugin 'ngmy/vim-rubocop'
 Plugin 'pangloss/vim-javascript'
+Bundle 'slim-template/vim-slim.git'
 Plugin 'mxw/vim-jsx'
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'jnurmine/Zenburn'
-Bundle 'slim-template/vim-slim.git'
 call vundle#end()
 
 set number
@@ -82,15 +80,6 @@ map <F3> :r !pbpaste<CR>
 " Strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Vim-flake8
-autocmd BufWritePost *.py call Flake8()
-let g:flake8_show_in_gutter=1
-let g:flake8_show_in_file=1
-" Use flake8 from active virtualenv
-let g:flake8_cmd="flake8"
-
-" vim-rubocop
-autocmd FileType ruby map <buffer> <F8> :RuboCop<CR>
 
 " Ignores for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
@@ -106,6 +95,28 @@ set lazyredraw
 let g:ycm_filetype_specific_completion_to_disable = {
   \'ruby': 1
   \}
+
+" Ale
+"let g:ale_python_flake8_args="flake8"
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\}
+let g:ale_sign_column_always = 1
+let g:ale_sign_error='✘'
+let g:ale_sign_warning='▲'
+
+let g:ale_echo_msg_error_str = '✘'
+let g:ale_echo_msg_warning_str = '▲'
+let g:ale_echo_msg_format = '%severity% [%linter%] %s'
+
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 1
+let g:ale_open_list = 0
+
 
 augroup ft_rb
     au!
