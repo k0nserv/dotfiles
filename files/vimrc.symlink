@@ -16,6 +16,7 @@ Plugin 'pangloss/vim-javascript'
 Bundle 'slim-template/vim-slim.git'
 Plugin 'mxw/vim-jsx'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'rust-lang/rust.vim'
 
 " Misc
 Plugin 'w0rp/ale'
@@ -178,3 +179,6 @@ augroup ft_rb
     " fix the SLOOOW syntax highlighting
     au FileType ruby setlocal re=1 foldmethod=manual nocursorline
 augroup END
+
+" Rust
+let g:rustfmt_autosave = 1
