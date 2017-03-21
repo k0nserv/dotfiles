@@ -38,15 +38,16 @@ set number
 set shell=/bin/zsh\ -l
 syntax on
 filetype plugin indent on
-set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
+set expandtab
 set backspace=indent,eol,start
 set cursorline
 set noswapfile
 set background=dark
 set smartcase
+set lazyredraw
 let mapleader = ' '
 colorscheme solarized
 set list
@@ -146,7 +147,6 @@ nmap <silent> <leader>d <Plug>DashSearch
 
 " vim-jsx
 let g:jsx_ext_required = 0
-set lazyredraw
 
 let g:ycm_filetype_specific_completion_to_disable = {
   \'ruby': 1
