@@ -71,5 +71,16 @@ export ZDOTDIR=$HOME
 export PIP_REQUIRE_VIRTUALENV=true
 
 
+function mkdataenv() {
+  mkvirtualenv --python /usr/local/bin/python3 $1
+  workon $1
+  mkdir "$1"
+  cd $1
+  pip install pandas jupyter numpy matplotlib seaborn
+  pip freeze > requirements.txt
+  jupyter notebook
+}
+
+
 export NVM_DIR="/Users/hugotunius/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
