@@ -34,6 +34,7 @@ alias dcd='$COMPOSE down'
 alias db='$DOCKER build .'
 alias dl='$DOCKER pull'
 alias dps='$DOCKER ps'
+alias de='$DOCKER exec'
 
 
 export UPDATE_ZSH_DAYS=1
