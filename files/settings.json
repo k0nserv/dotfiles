@@ -4,14 +4,22 @@
     "editor.fontLigatures": true,
     "vim.insertModeKeyBindings": [
         {
-            "before": ["j", "k"],
-            "after": ["<Esc>"]
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
         }
     ],
     "vim.leader": "<space>",
     "vim.otherModesKeyBindingsNonRecursive": [
         {
-            "before": ["<leader>", "w"],
+            "before": [
+                "<leader>",
+                "w"
+            ],
             "after": [],
             "commands": [
                 {
@@ -21,7 +29,10 @@
             ]
         },
         {
-            "before": ["<leader>", "q"],
+            "before": [
+                "<leader>",
+                "q"
+            ],
             "after": [],
             "commands": [
                 {
@@ -31,13 +42,16 @@
             ]
         },
         {
-            "before": ["<leader>", "z"],
+            "before": [
+                "<leader>",
+                "z"
+            ],
             "after": [],
             "commands": [
                 {
                     "command": "workbench.action.files.save",
                     "args": []
-                }, 
+                },
                 {
                     "command": "workbench.action.closeActiveEditor",
                     "args": []
@@ -45,7 +59,10 @@
             ]
         },
         {
-            "before": ["<leader>", "p"],
+            "before": [
+                "<leader>",
+                "p"
+            ],
             "after": [],
             "commands": [
                 {
@@ -55,7 +72,10 @@
             ]
         },
         {
-            "before": ["<leader>", "y"],
+            "before": [
+                "<leader>",
+                "y"
+            ],
             "after": [],
             "commands": [
                 {
@@ -65,8 +85,13 @@
             ]
         },
         {
-            "before": ["<leader>", "d"],
-            "after": ["d"],
+            "before": [
+                "<leader>",
+                "d"
+            ],
+            "after": [
+                "d"
+            ],
             "commands": [
                 {
                     "command": "editor.action.clipboardCopyAction",
@@ -75,7 +100,10 @@
             ]
         },
         {
-            "before": ["<leader>", "1"],
+            "before": [
+                "<leader>",
+                "1"
+            ],
             "after": [],
             "commands": [
                 {
@@ -85,7 +113,10 @@
             ]
         },
         {
-            "before": ["<leader>", "2"],
+            "before": [
+                "<leader>",
+                "2"
+            ],
             "after": [],
             "commands": [
                 {
@@ -96,7 +127,7 @@
         }
     ],
     "vim.statusBarColorControl": true,
-    "vim.statusBarColors" : {
+    "vim.statusBarColors": {
         "normal": "#005f5f",
         "insert": "#5f0000",
         "visual": "#5f00af",
@@ -110,9 +141,9 @@
     },
     "workbench.colorTheme": "Solarized-dark",
     "workbench.colorCustomizations": {
-        "statusBar.background": "#5f0000",
-        "statusBar.noFolderBackground": "#5f0000",
-        "statusBar.debuggingBackground": "#5f0000"
+        "statusBar.background": "#005f5f",
+        "statusBar.noFolderBackground": "#005f5f",
+        "statusBar.debuggingBackground": "#005f5f"
     },
     "vim.disableAnnoyingNeovimMessage": true,
     "editor.renderWhitespace": "boundary",
