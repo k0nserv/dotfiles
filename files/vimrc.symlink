@@ -96,6 +96,9 @@ nnoremap <leader>] :YcmCompleter GoTo<CR>
 set ruler
 set colorcolumn=120
 
+" Python
+let g:python3_host_prog = '/Users/hugotunius/Envs/nvim/bin/python'
+
 " vim-airline
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
