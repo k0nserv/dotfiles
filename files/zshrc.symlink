@@ -50,7 +50,7 @@ bindkey -M viins 'jk' vi-cmd-mode
 bindkey '^[[Z' reverse-menu-complete # Unbreak shift-tab
 
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
-export ZSH_PLUGINS="zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode docker"
+export ZSH_PLUGINS="npm zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode docker"
 if [ -f ~/.zsh_local ]; then
     source ~/.zsh_local
 fi
