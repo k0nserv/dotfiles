@@ -69,7 +69,7 @@ bind a:${hyper-key} hint QWERASDFZXCVBGT
 
 #Fast focus
 bind q:${hyper-key} focus 'Google Chrome'
-bind e:${hyper-key} focus 'iTerm'
+bind e:${hyper-key} focus 'iTerm2'
 bind r:${hyper-key} focus 'Xcode'
 bind t:${hyper-key} focus 'Mou'
 bind f:${hyper-key} focus 'Finder'
