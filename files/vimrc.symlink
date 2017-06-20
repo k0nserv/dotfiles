@@ -41,8 +41,9 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set backspace=indent,eol,start
-set cursorline
 set noswapfile
+set nocursorline
+set nocursorcolumn
 set background=dark
 set smartcase
 set lazyredraw
