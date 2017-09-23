@@ -36,7 +36,7 @@
             "after": [],
             "commands": [
                 {
-                    "command": "workbench.action.closeActiveEditore",
+                    "command": "workbench.action.closeActiveEditor",
                     "args": []
                 }
             ]
@@ -152,5 +152,8 @@
     "editor.trimAutoWhitespace": true,
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.tabSize": 4
+    }
 }
