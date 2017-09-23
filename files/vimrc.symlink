@@ -27,6 +27,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'rizzatti/dash.vim'
+Plugin 'tpope/vim-fugitive'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -180,6 +181,13 @@ let g:ale_open_list = 0
 
 let g:vim_markdown_folding_disabled = 1
 
+" Fugitive
+nmap <leader>gb :Gblame<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gd :Gdiff<CR>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gp :Gpush<CR>
+nmap <leader>gl :Gpull<CR>
 
 augroup ft_rb
     au!
