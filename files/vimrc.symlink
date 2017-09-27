@@ -28,6 +28,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'rizzatti/dash.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -188,6 +189,7 @@ nmap <leader>gd :Gdiff<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gp :Gpush<CR>
 nmap <leader>gl :Gpull<CR>
+nmap <leader>gh :Gbrowse<CR>
 
 augroup ft_rb
     au!
