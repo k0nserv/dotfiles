@@ -71,8 +71,6 @@ vmap <Leader>P "+P
 nnoremap <Leader>s :sv<CR>
 nnoremap <Leader>v :vs<CR>
 
-
-
 " Windows
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -100,6 +98,7 @@ set ruler
 set colorcolumn=120
 
 " Python
+let g:loaded_python_provider = 1
 let g:python3_host_prog = '/Users/hugotunius/Envs/nvim/bin/python'
 
 " vim-airline
