@@ -29,6 +29,8 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'rizzatti/dash.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
+Plugin 'junegunn/goyo.vim'
+Plugin 'tpope/vim-commentary'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -200,3 +202,18 @@ augroup END
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" From https://statico.github.io/vim3.html
+function! ProseMode()
+  call goyo#execute(0, [])
+  set spell noci nosi noai nolist noshowmode noshowcmd
+  set complete+=s
+  set bg=light
+  if !has('gui_running')
+    let g:solarized_termcolors=256
+  endif
+  colors solarized
+endfunction
+
+command! ProseMode call ProseMode()
+nmap \p :ProseMode<CR>
