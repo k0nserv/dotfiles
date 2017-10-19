@@ -26,6 +26,7 @@ alias tracert="traceroute"
 alias grep="grep --color=always"
 alias vimrc='$EDITOR ~/.vimrc'
 alias zshrc='$EDITOR ~/.zshrc'
+alias tmuxconf='$EDITOR ~/.tmux.conf'
 alias weather='curl wttr.in/Edinburgh'
 alias work='$EDITOR .'
 
