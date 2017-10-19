@@ -20,7 +20,6 @@ Plugin 'rust-lang/rust.vim'
 " Misc
 Plugin 'w0rp/ale'
 Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-airline/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
@@ -31,6 +30,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'junegunn/goyo.vim'
 Plugin 'tpope/vim-commentary'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -124,18 +125,12 @@ nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 
-" Ignores for Ctrlp
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-let g:ctrlp_working_path_mode = 'r'
-let g:user_command_async = 1
-if executable('rg')
-  let g:ctrlp_user_command = 'rg --files -F --color never --hidden --follow --glob "!.git/*" %s'
-endif
-nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bb :Buffer<cr>
+nmap <C-P> :Files<CR>
+nmap <C-I> :Tags<CR>
 
 " You complete me
 let g:ycm_autoclose_preview_window_after_completion=1
-nnoremap <C-I> :CtrlPBufTag<CR>
 let g:ycm_server_keep_logfiles=1
 
 " Clipboard
