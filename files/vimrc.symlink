@@ -32,6 +32,7 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'mileszs/ack.vim'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -212,3 +213,8 @@ endfunction
 
 command! ProseMode call ProseMode()
 nmap \p :ProseMode<CR>
+
+" Ack.vim
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
