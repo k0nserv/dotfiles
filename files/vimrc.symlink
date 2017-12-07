@@ -33,6 +33,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-surround'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
