@@ -52,6 +52,13 @@ bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey '^[[Z' reverse-menu-complete # Unbreak shift-tab
 
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export ZDOTDIR=$HOME
+export PIP_REQUIRE_VIRTUALENV=true
+
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
 export ZSH_PLUGINS="npm zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode docker"
 if [ -f ~/.zsh_local ]; then
@@ -60,21 +67,9 @@ fi
 
 plugins=(`echo $ZSH_PLUGINS`)
 
-source $ZSH/oh-my-zsh.sh
-
 # After plugins load to override other `d`
 alias d='$DOCKER'
 alias dc='$COMPOSE'
-
-
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export ZDOTDIR=$HOME
-export PIP_REQUIRE_VIRTUALENV=true
-
 
 function mkdataenv() {
   mkvirtualenv --python /usr/local/bin/python3 $1
@@ -89,6 +84,16 @@ vsc () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 _has() {
   return $( whence $1 >/dev/null )
 }
+
+function tmux-init() {
+  tmux ls && read tmux_session && tmux attach -t ${tmux_session:-default} || tmux new -s ${tmux_session:-default}
+}
+
+function mkb() {
+  git fetch && git checkout -b "$1" origin/master
+}
+
+source $ZSH/oh-my-zsh.sh
 
 # fzf via Homebrew
 if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
