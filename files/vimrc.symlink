@@ -199,6 +199,7 @@ augroup END
 
 " Rust
 let g:rustfmt_autosave = 1
+let g:rustfmt_command = "cargo fmt -- "
 
 " From https://statico.github.io/vim3.html
 function! ProseMode()
