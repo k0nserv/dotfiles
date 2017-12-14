@@ -157,7 +157,6 @@ let g:ycm_filetype_specific_completion_to_disable = {
   \'ruby': 1
   \}
 
-let g:ycm_rust_src_path = '/usr/local/rust/rustc-nightly-src'
 
 " Ale
 "let g:ale_python_flake8_args="flake8"
