@@ -1,9 +1,10 @@
 [user]
 	name = Hugo Tunius
 	email = hugo.tunius@gmail.com
+	signingkey = 841E768B6756FA89
 [core]
-	excludesfile = ~/.gitignore_global
-	editor = vim
+	excludesfile = /Users/hugotunius/.gitignore_global
+	editor = nvim
 
 [alias]
     log = log --topo-order --decorate
@@ -15,5 +16,13 @@
     ui = true
 [http]
 	postBuffer = 524288000
+	cookiefile = /Users/hugotunius/.gitcookies
 [commit]
     template = ~/.gitmessage
+	gpgSign = true
+[secrets]
+	patterns = <.*(pass|Pass|PASS).*>[a-zA-Z0-9]*</.*(pass|Pass|PASS).*>
+	patterns = "Password=[a-zA-Z0-9]*(;|<)"
+	patterns = (-----(\\bBEGIN\\b) (\\bRSA|EC|PGP\\b) (\\bPRIVATE KEY\\b)( BLOCK)?-----)
+	patterns = .*pass.*\\s*=\\s*(\"|\\')[a-zA-Z0-9]*(\"|\\')$
+[hub]
