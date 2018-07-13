@@ -2,7 +2,9 @@ require 'pathname'
 
 
 CUSTOM_DESTINATIONS = {
-  'init.lua' => '$HOME/.hammerspoon'
+  'init.lua' => '$HOME/.hammerspoon',
+  'gpg-agent.conf' => '$HOME/.gnupg',
+  'gpg.conf' => '$HOME/.gnupg',
 }
 
 def destination_for_file(file)
