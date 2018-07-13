@@ -17,6 +17,8 @@ Plugin 'mxw/vim-jsx'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'rust-lang/rust.vim'
 Plugin 'HerringtonDarkholme/yats.vim'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'leafgarland/typescript-vim'
 
 " Misc
 Plugin 'w0rp/ale'
@@ -41,7 +43,7 @@ Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 
 set number
-set shell=/bin/zsh\ -l
+set shell=/usr/local/bin/zsh
 syntax on
 filetype plugin indent on
 set tabstop=2
@@ -145,6 +147,8 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'css': ['stylelint'],
+\   'scss': ['stylelint'],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
@@ -161,6 +165,7 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_enter = 1
 let g:ale_open_list = 0
+let g:ale_history_log_output=1
 nmap <silent> <C-a> :ALEDetail<CR>
 
 let g:vim_markdown_folding_disabled = 1
