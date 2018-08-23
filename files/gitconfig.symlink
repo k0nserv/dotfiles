@@ -1,6 +1,6 @@
 [user]
 	name = Hugo Tunius
-	email = hugo.tunius@gmail.com
+	email = h@tunius.se
 	signingkey = 841E768B6756FA89
 [core]
 	excludesfile = /Users/hugotunius/.gitignore_global
