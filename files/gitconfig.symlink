@@ -26,3 +26,5 @@
 	patterns = (-----(\\bBEGIN\\b) (\\bRSA|EC|PGP\\b) (\\bPRIVATE KEY\\b)( BLOCK)?-----)
 	patterns = .*pass.*\\s*=\\s*(\"|\\')[a-zA-Z0-9]*(\"|\\')$
 [hub]
+[gpg]
+	program = gpg
