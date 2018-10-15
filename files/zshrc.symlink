@@ -120,5 +120,6 @@ if _has fzf && _has ag; then
 fi
 
 
+export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 gpgconf --launch gpg-agent
