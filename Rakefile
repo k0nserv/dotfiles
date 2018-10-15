@@ -5,6 +5,8 @@ CUSTOM_DESTINATIONS = {
   'init.lua' => '$HOME/.hammerspoon',
   'gpg-agent.conf' => '$HOME/.gnupg',
   'gpg.conf' => '$HOME/.gnupg',
+  'Brewfile.global' => '$HOME/.config/brew',
+  'brew_bundle.sh' => '$HOME/.config/brew'
 }
 
 def destination_for_file(file)

@@ -1,0 +1,116 @@
+cask_args appdir: '/Applications'
+
+tap 'drone/drone'
+tap 'homebrew/bundle'
+tap 'homebrew/cask'
+tap 'homebrew/core'
+tap 'homebrew/versions'
+tap 'neovim/neovim'
+
+# Automatic configure script builder
+brew 'autoconf'
+# Shell extension to jump to frequently used directories
+brew 'autojump'
+# Interpreted, interactive, object-oriented programming language
+brew 'python'
+# Clone of cat(1) with syntax highlighting and Git integration
+brew 'bat'
+# Collection of portable C++ source libraries
+brew 'boost'
+# Software library to render fonts
+brew 'freetype'
+# XML-based font configuration API for X Windows
+brew 'fontconfig'
+# GNU internationalization (i18n) and localization (l10n) library
+brew 'gettext'
+# Portable Foreign Function Interface library
+brew 'libffi' # Core application library for C brew 'glib' Low-level library for pixel manipulation
+brew 'pixman'
+# Vector graphics library with cross-device output support
+brew 'cairo'
+# Statistics utility to count lines of code
+brew 'cloc'
+# Cross-platform make
+brew 'cmake'
+# GNU File, Shell, and Text utilities
+brew 'coreutils'
+# Reimplementation of ctags(1)
+brew 'ctags'
+# Get a file from an HTTP, HTTPS or FTP server
+brew 'curl'
+# Good-lookin' diffs with diff-highlight and more
+brew 'diff-so-fancy'
+# Command-line tool to interact with exercism.io
+brew 'exercism'
+# Library for manipulating fonts
+brew 'fonttools'
+# Command-line fuzzy finder written in Go
+brew 'fzf'
+# Distributed revision control system
+brew 'git'
+# Prevents you from committing sensitive information to a git repo
+brew 'git-secrets'
+# GNU multiple precision arithmetic library
+brew 'gmp'
+# Convert source code to formatted text with syntax highlighting
+brew 'highlight'
+# Improved top (interactive process viewer)
+brew 'htop'
+# Add GitHub support to git on the command-line
+brew 'hub'
+# Image manipulation library
+brew 'jpeg'
+# Generic library support script
+brew 'libtool'
+# Tools and libraries to manipulate images in many formats
+brew 'imagemagick'
+# Regular expressions library
+brew 'oniguruma'
+# Lightweight and flexible command-line JSON processor
+brew 'jq'
+# GNOME XML library
+brew 'libxml2', args: ['with-python'], link: true
+# MPEG audio decoder
+brew 'mad'
+# Intercept, modify, replay, save HTTP/S traffic
+brew 'mitmproxy'
+# Open source relational database management system
+brew 'neovim'
+# Passphrase entry dialog utilizing the Assuan protocol
+brew 'pinentry'
+# Manage compile and link flags for libraries
+brew 'pkg-config'
+# Python version management
+brew 'pyenv'
+# Ruby version manager
+brew 'rbenv'
+# Perl-powered file rename script with many helpful built-ins
+brew 'rename'
+# Search tool like grep and The Silver Searcher
+brew 'ripgrep'
+# Readline wrapper: adds readline support to tools that lack it
+brew 'rlwrap'
+# Install various Ruby versions and implementations
+brew 'ruby-build'
+# HTTP regression testing and benchmarking utility
+brew 'siege'
+# SSL tunneling program
+brew 'stunnel'
+# Tool to enforce Swift style and conventions
+brew 'swiftlint'
+# Code-search similar to ack
+brew 'the_silver_searcher'
+# Text interface for Git repositories
+brew 'tig'
+# Terminal multiplexer
+brew 'tmux'
+# Display directories as trees (with optional color/HTML output)
+brew 'tree'
+# Vi 'workalike' with many additional features
+brew 'vim', link: false
+# Executes a program periodically, showing output fullscreen
+brew 'watch'
+# Watch files and take action when they change
+brew 'watchman'
+# UNIX shell (command interpreter)
+brew 'zsh'
