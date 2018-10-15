@@ -72,6 +72,8 @@ brew 'jq'
 brew 'libxml2', args: ['with-python'], link: true
 # MPEG audio decoder
 brew 'mad'
+# Mac App Store command-line interface
+brew 'mas'
 # Intercept, modify, replay, save HTTP/S traffic
 brew 'mitmproxy'
 # Open source relational database management system
@@ -114,3 +116,13 @@ brew 'watch'
 brew 'watchman'
 # UNIX shell (command interpreter)
 brew 'zsh'
+
+# Applications
+tap 'homebrew/cask-versions'
+cask 'alfred'
+mas 'Caffeine', id: 411246225
+cask 'firefox-beta'
+cask 'hammerspoon'
+cask 'iterm2-beta'
+mas 'Tweetbot', id: 1384080005
+
