@@ -97,7 +97,7 @@ set colorcolumn=120
 
 " Python
 let g:loaded_python_provider = 1
-let g:python3_host_prog = '/Users/hugotunius/Envs/nvim/bin/python'
+let g:python3_host_prog = '/Users/hugotunius/Envs/nvim/bin/python3'
 
 " vim-airline
 let g:airline_powerline_fonts = 1
