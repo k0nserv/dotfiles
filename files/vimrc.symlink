@@ -25,7 +25,6 @@ Plugin 'w0rp/ale'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-airline/vim-airline'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'rizzatti/dash.vim'
@@ -37,6 +36,8 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-surround'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'carlitux/deoplete-ternjs'
 
 " Color Schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -114,9 +115,9 @@ nmap <leader>bb :Buffer<cr>
 nmap <C-P> :Files<CR>
 nmap <C-I> :Tags<CR>
 
-" You complete me
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_server_keep_logfiles=1
+" deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
