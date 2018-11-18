@@ -6,6 +6,7 @@ tap 'homebrew/cask'
 tap 'homebrew/core'
 tap 'homebrew/versions'
 tap 'neovim/neovim'
+tap 'caskroom/fonts'
 
 # Automatic configure script builder
 brew 'autoconf'
@@ -122,7 +123,9 @@ tap 'homebrew/cask-versions'
 cask 'alfred'
 mas 'Caffeine', id: 411246225
 cask 'firefox-beta'
+cask 'font-fira-code'
 cask 'hammerspoon'
 cask 'iterm2-beta'
 mas 'Tweetbot', id: 1384080005
+mas '1Password', id: 568903335
 
