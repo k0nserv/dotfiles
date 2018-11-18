@@ -1,7 +1,7 @@
 [user]
 	name = Hugo Tunius
 	email = h@tunius.se
-	signingkey = 841E768B6756FA89
+	signingkey = 005A20BBC42CFCFE
 [core]
 	excludesfile = /Users/hugotunius/.gitignore_global
 	editor = nvim
