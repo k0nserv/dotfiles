@@ -1,47 +1,47 @@
 set nocompatible               " be eMproved
 filetype off                   " required!
 
-" Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+" vim-plug
+call plug#begin('~/.vim/plugged')
 
 " Language Support
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'keith/swift.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'rust-lang/rust.vim'
-Plugin 'HerringtonDarkholme/yats.vim'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'leafgarland/typescript-vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'keith/swift.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'plasticboy/vim-markdown'
+Plug 'rust-lang/rust.vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'leafgarland/typescript-vim'
 
 " Misc
-Plugin 'w0rp/ale'
-Plugin 'scrooloose/nerdtree'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-airline/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'rizzatti/dash.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'junegunn/goyo.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'carlitux/deoplete-ternjs'
+Plug 'w0rp/ale'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'rizzatti/dash.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'junegunn/goyo.vim'
+Plug 'tpope/vim-commentary'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-surround'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'sebastianmarkow/deoplete-rust'
+Plug 'carlitux/deoplete-ternjs'
 
 " Color Schemes
-Plugin 'altercation/vim-colors-solarized'
-call vundle#end()
+Plug 'altercation/vim-colors-solarized'
+call plug#end()
 
 set number
 set shell=/usr/local/bin/zsh
@@ -117,7 +117,14 @@ nmap <C-I> :Tags<CR>
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+
+let g:deoplete#sources#rust#racer_binary='/Users/hugotunius/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='$RUST_SRC_PATH'
+let g:deoplete#sources#rust#disable_keymap=1
+let g:deoplete#sources#rust#documentation_max_height=0
+
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
 
 " Strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
@@ -189,11 +196,13 @@ augroup END
 " Rust
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
+let g:rust_cargo_check_tests = 1
 
 " From https://statico.github.io/vim3.html
 function! ProseMode()
   call goyo#execute(0, [])
   set spell noci nosi noai nolist noshowmode noshowcmd
+  set spelllang=en_gb
   set complete+=s
   set bg=light
   if !has('gui_running')
