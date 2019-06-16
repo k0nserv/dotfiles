@@ -79,7 +79,7 @@ defineScrenThrow(3)
 defineScrenThrow(4)
 
 -- Misc
-hs.hotkey.bind(HYPER, "R", function ()
+hs.hotkey.bind(HYPER, "Z", function ()
   hs.reload()
 end)
 hs.alert.show("Config loaded")
