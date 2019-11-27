@@ -17,6 +17,7 @@ hs.hotkey.bind(HYPER, "I", function ()
   win:setFrame(frame)
 end)
 
+-- Right Half, Full Height
 hs.hotkey.bind(HYPER, "L", function ()
   local win = hs.window.focusedWindow()
   local frame = win:frame()
@@ -30,7 +31,8 @@ hs.hotkey.bind(HYPER, "L", function ()
   win:setFrame(frame)
 end)
 
-hs.hotkey.bind(HYPER, "J", function ()
+-- Left Half, Full Height
+hs.hotkey.bind(HYPER, "H", function ()
   local win = hs.window.focusedWindow()
   local frame = win:frame()
   local screen = win:screen()
@@ -43,7 +45,42 @@ hs.hotkey.bind(HYPER, "J", function ()
   win:setFrame(frame)
 end)
 
+-- Top Half, Full Width
 hs.hotkey.bind(HYPER, "K", function ()
+  local win = hs.window.focusedWindow()
+  local frame = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  local newFrameWidth = max.w
+  local newFrameHeight = max.h / 2
+
+  frame.x = max.x
+  frame.y = max.y
+  frame.w = newFrameWidth
+  frame.h = newFrameHeight
+  win:setFrame(frame)
+end)
+
+-- Bottom Half, Full Width
+hs.hotkey.bind(HYPER, "J", function ()
+  local win = hs.window.focusedWindow()
+  local frame = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  local newFrameWidth = max.w
+  local newFrameHeight = max.h / 2
+
+  frame.x = max.x
+  frame.y = max.y + newFrameHeight
+  frame.w = newFrameWidth
+  frame.h = newFrameHeight
+  win:setFrame(frame)
+end)
+
+-- Center of screen
+hs.hotkey.bind(HYPER, "P", function ()
   local win = hs.window.focusedWindow()
   local frame = win:frame()
   local screen = win:screen()
