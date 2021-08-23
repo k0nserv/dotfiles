@@ -1,6 +1,8 @@
 set -g default-terminal "screen-256color"
 bind r source-file ~/.tmux.conf
 
+set -g prefix C-space
+
 set -g set-titles on
 
 set -g status-bg black
@@ -8,6 +10,8 @@ set -g status-fg white
 set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
 set -s escape-time 0
 set-option -g history-limit 250000
+
+bind-key H popup -E -h 95% -w 95% -x 5% "htop"
 
 # Stop with the annoying questions
 bind-key x kill-pane
