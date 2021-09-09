@@ -14,33 +14,50 @@ Plug 'mxw/vim-jsx'
 Plug 'plasticboy/vim-markdown'
 Plug 'rust-lang/rust.vim'
 Plug 'ekalinin/Dockerfile.vim'
+Plug 'udalov/kotlin-vim'
+Plug 'uarun/vim-protobuf'
 
 " Misc
 Plug 'w0rp/ale'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rizzatti/dash.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'glepnir/dashboard-nvim'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
+Plug 'folke/lsp-colors.nvim', { 'branch': 'main' }
+
+" Alter of tpope
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'mileszs/ack.vim'
-Plug 'tpope/vim-surround'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'sebastianmarkow/deoplete-rust'
-Plug 'carlitux/deoplete-ternjs'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'sebastianmarkow/deoplete-rust'
+" Plug 'carlitux/deoplete-ternjs'
 
 " Color Schemes
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8/'
 call plug#end()
 
-set number
+set encoding=utf8
+set number relativenumber
 set shell=/usr/local/bin/zsh
 syntax on
 filetype plugin indent on
@@ -50,13 +67,16 @@ set softtabstop=2
 set expandtab
 set backspace=indent,eol,start
 set noswapfile
-set nocursorline
+set cursorline
 set nocursorcolumn
+set t_Co=256
 set background=dark
+set termguicolors
+autocmd vimenter * ++nested colorscheme solarized8_flat
 set smartcase
 set lazyredraw
 let mapleader = ' '
-colorscheme solarized
+"colorscheme solarized
 set list
 set listchars=eol:¬
 " Turn off modelines
@@ -89,11 +109,11 @@ nnoremap <C-H> <C-W><C-H>
 " Buffers
 set hidden
 
-" Navigation
-nnoremap <leader>] :YcmCompleter GoTo<CR>
-
 set ruler
 set colorcolumn=120
+
+" Dashboard
+let g:dashboard_default_executive ='fzf'
 
 " Python
 let g:loaded_python_provider = 1
@@ -130,22 +150,19 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 
 " Strip whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre * :%s/\s\+$//e
 
 
-" Ignores for NERDTree
-let NERDTreeIgnore = ['\.pyc$']
-nnoremap <silent> <F8> :NERDTreeToggle<CR>
+" nvim_tree
+nnoremap <F8> :NvimTreeToggle<CR>
+let g:nvim_tree_disable_netrw = 0
+let g:netrw_banner=0
 
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
 
 " vim-jsx
 let g:jsx_ext_required = 0
-
-let g:ycm_filetype_specific_completion_to_disable = {
-  \'ruby': 1
-  \}
 let g:javascript_plugin_flow = 1
 
 
@@ -154,7 +171,7 @@ let g:javascript_plugin_flow = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
 \   'python': ['flake8'],
-\   'javascript': ['eslint', 'flow'],
+\   'javascript': ['eslint', 'flow-language-server'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
@@ -182,13 +199,14 @@ nmap <silent> <C-a> :ALEDetail<CR>
 let g:vim_markdown_folding_disabled = 1
 
 " Fugitive
-nmap <leader>gb :Gblame<CR>
-nmap <leader>gs :Gstatus<CR>
-nmap <leader>gd :Gdiff<CR>
-nmap <leader>gc :Gcommit<CR>
-nmap <leader>gp :Gpush<CR>
-nmap <leader>gl :Gpull<CR>
-nmap <leader>gh :Gbrowse<CR>
+nmap <leader>gb :Git blame<CR>
+nmap <leader>gs :Git status<CR>
+nmap <leader>gd :Git diff<CR>
+nmap <leader>gc :Git commit<CR>
+nmap <leader>gp :Git push<CR>
+nmap <leader>gl :Git pull<CR>
+nmap <leader>gh :GBrowse<CR>
+
 
 augroup ft_rb
     au!
@@ -208,10 +226,6 @@ function! ProseMode()
   set spelllang=en_gb
   set complete+=s
   set bg=light
-  if !has('gui_running')
-    let g:solarized_termcolors=256
-  endif
-  colors solarized
 endfunction
 
 command! ProseMode call ProseMode()
@@ -221,3 +235,124 @@ nmap \p :ProseMode<CR>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+
+" From https://jeffkreeftmeijer.com/vim-number/
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
+
+hi! LspDiagnosticsDefaultError guifg=#dc322f gui=bold,standout
+hi! LspDiagnosticsDefaultWarning guifg=#b58900 gui=italic
+hi! LspDiagnosticsDefaultInformation guifg=#2aa198 gui=italic
+hi! LspDiagnosticsDefaultHint guifg=#2aa198 gui=italic cterm=italic
+
+" Language servers
+lua << EOF
+-- local luasnip = require 'luasnip'
+require("lsp-colors").setup({
+  Error = "#dc322f",
+  Warning = "#b58900",
+  Information = "#268bd2",
+  Hint = "#2aa198"
+})
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = function(fallback)
+      if vim.fn.pumvisible() == 1 then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+      elseif luasnip.expand_or_jumpable() then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
+      else
+        fallback()
+      end
+    end,
+    ['<S-Tab>'] = function(fallback)
+      if vim.fn.pumvisible() == 1 then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+      elseif luasnip.jumpable(-1) then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
+      else
+        fallback()
+      end
+    end,
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
+
+local nvim_lsp = require('lspconfig')
+nvim_lsp.rust_analyzer.setup{}
+nvim_lsp.flow.setup{}
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  -- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  -- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts) buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts) -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'rust_analyzer', 'flow' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+-- default mappings
+vim.g.nvim_tree_bindings = {
+  { key = {"C"}, cb = tree_cb("cd") }
+}
+EOF
