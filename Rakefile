@@ -6,7 +6,11 @@ CUSTOM_DESTINATIONS = {
   'gpg-agent.conf' => '$HOME/.gnupg',
   'gpg.conf' => '$HOME/.gnupg',
   'Brewfile.global' => '$HOME/.config/brew',
-  'brew_bundle.sh' => '$HOME/.config/brew'
+  'brew_bundle.sh' => '$HOME/.config/brew',
+
+  # Kitty
+  'kitty.conf' => '$HOME/.config/kitty',
+  'solarized-dark.conf' => '$HOME/.config/kitty',
 }
 
 def destination_for_file(file)
@@ -17,7 +21,7 @@ end
 
 task default: %w(sync)
 
-task sync: :pull do
+task :symlinks do
   files = Dir.glob('files/**/*.symlink').map do |file|
     pathname = Pathname.new(file)
     filename = pathname.basename.to_s.gsub(/\.symlink/i, '')
@@ -33,6 +37,7 @@ task sync: :pull do
   end
 end
 
+task sync: [:pull, :symlinks]
 
 task :pull do
   system('git pull origin master')
