@@ -36,6 +36,7 @@ alias zshrc='$EDITOR ~/.zshrc'
 alias tmuxconf='$EDITOR ~/.tmux.conf'
 alias weather='curl wttr.in/Edinburgh'
 alias work='$EDITOR .'
+alias unfuck-audio="sudo kill -9 `ps ax|grep 'coreaudio[a-z]' | awk '{print $1}'`"
 
 # Docker aliases
 COMPOSE='docker-compose'
