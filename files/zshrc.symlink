@@ -109,6 +109,21 @@ function mkb() {
   git fetch && git checkout -b "$1" origin/master
 }
 
+function browse-crate() {
+  if [ "$#" -ne 2 ]
+  then
+    echo "Usage: browse-crate {crate} {version}"
+    return 1
+  fi
+
+  crate=$1
+  version=$2
+
+  # I have no idea what this hash in the path is, but this is what it is
+  # on my machine
+  $EDITOR "~/.cargo/registry/src/github.com-1ecc6299db9ec823/$crate-$version"
+}
+
 source $ZSH/oh-my-zsh.sh
 
 # fzf via Homebrew
