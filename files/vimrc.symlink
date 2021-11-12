@@ -16,27 +16,29 @@ Plug 'rust-lang/rust.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'udalov/kotlin-vim'
 Plug 'uarun/vim-protobuf'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'jparise/vim-graphql'
 
 " Misc
 Plug 'w0rp/ale'
-" Plug 'scrooloose/nerdtree'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rizzatti/dash.vim'
-Plug 'ryanoasis/vim-devicons'
 Plug 'glepnir/dashboard-nvim'
+Plug 'alexghergh/nvim-tmux-navigation'
+Plug 'numtostr/FTerm.nvim'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
-Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
 Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
 Plug 'folke/lsp-colors.nvim', { 'branch': 'main' }
 
-" Alter of tpope
+" Altar of tpope
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
@@ -47,13 +49,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'sebastianmarkow/deoplete-rust'
-" Plug 'carlitux/deoplete-ternjs'
-
 " Color Schemes
 " Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8/'
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 set encoding=utf8
@@ -72,16 +71,17 @@ set nocursorcolumn
 set t_Co=256
 set background=dark
 set termguicolors
-autocmd vimenter * ++nested colorscheme solarized8_flat
+" autocmd vimenter * ++nested colorscheme solarized8_flat
 set smartcase
 set lazyredraw
 let mapleader = ' '
-"colorscheme solarized
+colorscheme nord
 set list
-set listchars=eol:¬
+set listchars=eol:¬,trail:·
 " Turn off modelines
 set modelines=0
 set nomodeline
+highlight Comment cterm=italic gui=italic
 
 " Remap
 vnoremap . :norm.<CR>
@@ -101,16 +101,24 @@ nnoremap <Leader>s :sv<CR>
 nnoremap <Leader>v :vs<CR>
 
 " Windows
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " Buffers
 set hidden
 
 set ruler
 set colorcolumn=120
+
+set foldmethod=syntax
+
+
+au TextYankPost * silent! lua vim.highlight.on_yank()
+
+" Editor config
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " Dashboard
 let g:dashboard_default_executive ='fzf'
@@ -127,13 +135,13 @@ endif
 let g:airline_symbols.space = "\ua0"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
-let g:airline_theme = 'powerlineish'
+" let g:airline_theme = 'powerlineish'
 set laststatus=2
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 nmap <leader>bb :Buffer<cr>
 nmap <C-P> :Files<CR>
-nmap <C-I> :Tags<CR>
+
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -155,11 +163,18 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " nvim_tree
 nnoremap <F8> :NvimTreeToggle<CR>
-let g:nvim_tree_disable_netrw = 0
-let g:netrw_banner=0
+let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 1,
+    \ 'files': 1,
+    \ 'folder_arrows': 0,
+    \ }
+let g:nvim_tree_disable_window_picker = 0
 
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>D <Plug>DashGlobalSearch
 
 " vim-jsx
 let g:jsx_ext_required = 0
@@ -249,8 +264,25 @@ hi! LspDiagnosticsDefaultWarning guifg=#b58900 gui=italic
 hi! LspDiagnosticsDefaultInformation guifg=#2aa198 gui=italic
 hi! LspDiagnosticsDefaultHint guifg=#2aa198 gui=italic cterm=italic
 
+autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4 nolist
+
+
 " Language servers
 lua << EOF
+-- Scratch
+vim.cmd('command! CargoCheck lua require("FTerm").scratch({ cmd = {"cargo", "check"} })')
+
+-- tmux navigation 
+require'nvim-tmux-navigation'.setup {
+    disable_when_zoomed = true -- defaults to false
+}
+vim.api.nvim_set_keymap('n', "<C-h>", ":lua require'nvim-tmux-navigation'.NvimTmuxNavigateLeft()<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<C-j>", ":lua require'nvim-tmux-navigation'.NvimTmuxNavigateDown()<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<C-k>", ":lua require'nvim-tmux-navigation'.NvimTmuxNavigateUp()<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<C-l>", ":lua require'nvim-tmux-navigation'.NvimTmuxNavigateRight()<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<C-\\>", ":lua require'nvim-tmux-navigation'.NvimTmuxNavigateLastActive()<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<C-Space>", ":lua require'nvim-tmux-navigation'.NvimTmuxNavigateNext()<cr>", { noremap = true, silent = true })
+
 -- local luasnip = require 'luasnip'
 require("lsp-colors").setup({
   Error = "#dc322f",
@@ -259,14 +291,36 @@ require("lsp-colors").setup({
   Hint = "#2aa198"
 })
 
+require'nvim-web-devicons'.setup({
+ -- your personnal icons can go here (to override)
+ -- DevIcon will be appended to `name`
+ override = {
+  zsh = {
+    icon = "",
+    color = "#428850",
+    name = "Zsh"
+  }
+ };
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+})
+
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+require'nvim-tree'.setup({
+  disable_netrw = false,
+  view = {
+    mappings = {
+      list = {
+        { key = {"C"}, cb = tree_cb("cd") }
+      }
+    }
+  }
+})
+
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -279,19 +333,20 @@ cmp.setup {
       select = true,
     },
     ['<Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
+      print(vim.fn.pumvisible() ~= 1 or cmp.visible())
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn.pumvisible() ~= 0 then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
-      elseif luasnip.expand_or_jumpable() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
       else
         fallback()
       end
     end,
     ['<S-Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
-      elseif luasnip.jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
       else
         fallback()
       end
@@ -299,13 +354,16 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' }
   },
 }
 
 local nvim_lsp = require('lspconfig')
 nvim_lsp.rust_analyzer.setup{}
 nvim_lsp.flow.setup{}
+nvim_lsp.tsserver.setup{}
+nvim_lsp.gopls.setup{}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -324,23 +382,25 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+--  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   -- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts) buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts) -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts) 
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts) 
+  -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'rust_analyzer', 'flow' }
+local servers = { 'rust_analyzer', 'flow', 'tsserver', 'gopls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -349,10 +409,4 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
-
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
--- default mappings
-vim.g.nvim_tree_bindings = {
-  { key = {"C"}, cb = tree_cb("cd") }
-}
 EOF
