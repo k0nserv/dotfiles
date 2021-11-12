@@ -110,18 +110,30 @@ function mkb() {
 }
 
 function browse-crate() {
-  if [ "$#" -ne 2 ]
+  if [ "$#" -ne 2 ] && [ "$#" -ne 1 ]
   then
-    echo "Usage: browse-crate {crate} {version}"
+    echo "Usage:\nbrowse-crate {crate} {version}\nbrowse-crate {crate}"
     return 1
   fi
-
-  crate=$1
-  version=$2
-
   # I have no idea what this hash in the path is, but this is what it is
   # on my machine
-  $EDITOR "~/.cargo/registry/src/github.com-1ecc6299db9ec823/$crate-$version"
+  crates_base_path="~/.cargo/registry/src/github.com-1ecc6299db9ec823"
+
+  crate=$1
+  crate_path=""
+
+  if [ "$#" -eq 1 ]
+  then
+    crate_path=`FZF_DEFAULT_COMMAND="fd -d 1 \"$crate-[\d\.]\" $crates_base_path" fzf -1`
+  else 
+    crate_path="$crates_base_path/$crate-$2"
+  fi
+
+  echo $crate_path
+  if [ -n "$crate_path" ] 
+  then
+    nvim -c ":cd $crate_path" "$crate_path"
+  fi
 }
 
 source $ZSH/oh-my-zsh.sh
