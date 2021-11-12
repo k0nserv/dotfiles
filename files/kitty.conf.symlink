@@ -1,11 +1,17 @@
-include ./solarized-dark.conf
+# include ./solarized-dark.conf
+include ./nord.conf
 
-font_family Fira Code
+font_family FiraCode Nerd Font
+italic_font FiraCode Nerd Font Italic
+bold_font FiraCode Nerd Font Bold
+bold_italic_font FiraCode Nerd Font Bold Italic
 font_size 14.0
+adjust_line_height 125%
 
 window_margin_width 0 4
 
 macos_titlebar_color background
 macos_show_window_title_in none
+hide_window_decorations yes
 
 startup_session ./startup.conf
