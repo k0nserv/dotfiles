@@ -2,19 +2,20 @@ require 'pathname'
 
 
 CUSTOM_DESTINATIONS = {
-  'init.lua' => '$HOME/.hammerspoon',
-  'gpg-agent.conf' => '$HOME/.gnupg',
-  'gpg.conf' => '$HOME/.gnupg',
-  'Brewfile.global' => '$HOME/.config/brew',
-  'brew_bundle.sh' => '$HOME/.config/brew',
+  'nvim/init.lua' => "$HOME/.config/nvim/init.lua",
+  'init.lua' => '$HOME/.hammerspoon/init.lua',
+  'gpg-agent.conf' => '$HOME/.gnupg/gpg-agent.conf',
+  'gpg.conf' => '$HOME/.gnupg/gpg.conf',
+  'Brewfile.global' => '$HOME/.config/brew/Brewfile.global',
+  'brew_bundle.sh' => '$HOME/.config/brew/brew_bundle.sh',
 
   # Kitty
-  'kitty.conf' => '$HOME/.config/kitty',
-  'solarized-dark.conf' => '$HOME/.config/kitty',
+  'kitty.conf' => '$HOME/.config/kitty/kitty.conf',
+  'solarized-dark.conf' => '$HOME/.config/kitty/solarized-dark.conf',
 }
 
 def destination_for_file(file)
-  return File.join(CUSTOM_DESTINATIONS[file], file) if CUSTOM_DESTINATIONS.has_key?(file)
+  return CUSTOM_DESTINATIONS[file] if CUSTOM_DESTINATIONS.has_key?(file)
 
   Pathname.new("$HOME/.#{file}")
 end
@@ -22,12 +23,17 @@ end
 task default: %w(sync)
 
 task :symlinks do
-  files = Dir.glob('files/**/*.symlink').map do |file|
-    pathname = Pathname.new(file)
-    filename = pathname.basename.to_s.gsub(/\.symlink/i, '')
+  files = Dir.glob('files/**/*').filter_map do |file|
+    next nil if Dir.exist?(file)
 
-    [Pathname.pwd() + pathname, destination_for_file(filename)]
+    pathname = Pathname.new(file)
+    filename = pathname.relative_path_from('files')
+    p filename.to_s
+
+    [File.join(Pathname.pwd(), pathname), destination_for_file(filename.to_s)]
   end
+
+  p files
 
   force = ENV['OVERRIDE_SYMLINKS'] == 'true'
   flags = '-s'
