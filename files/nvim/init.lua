@@ -217,12 +217,6 @@ require('telescope').setup{
 }
 require('telescope').load_extension('fzf')
 
-require("lsp-colors").setup({
-  Error = "#dc322f",
-  Warning = "#b58900",
-  Information = "#268bd2",
-  Hint = "#2aa198"
-})
 
 require'nvim-web-devicons'.setup({
  -- your personnal icons can go here (to override)
