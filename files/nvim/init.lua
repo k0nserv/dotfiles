@@ -291,7 +291,6 @@ cmp.setup {
 
 local nvim_lsp = require('lspconfig')
 nvim_lsp.rust_analyzer.setup{}
-nvim_lsp.flow.setup{}
 nvim_lsp.tsserver.setup{}
 nvim_lsp.gopls.setup{}
 
@@ -330,7 +329,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'rust_analyzer', 'flow', 'tsserver', 'gopls' }
+local servers = { 'rust_analyzer', 'tsserver', 'gopls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
