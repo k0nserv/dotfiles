@@ -80,6 +80,7 @@ vim.cmd([[
   hi! LspDiagnosticsDefaultHint guifg=#2aa198 gui=italic cterm=italic
 ]])
 vim.cmd("autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4 nolist")
+vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank()')
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
