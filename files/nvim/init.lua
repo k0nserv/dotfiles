@@ -30,6 +30,7 @@ Plug('hrsh7th/nvim-cmp', {branch= 'main'})
 Plug('hrsh7th/cmp-nvim-lsp', {branch= 'main'})
 Plug('hrsh7th/cmp-buffer', {branch= 'main'})
 Plug('folke/lsp-colors.nvim', {branch= 'main'})
+Plug 'folke/trouble.nvim'
 
 -- Airline
 Plug 'vim-airline/vim-airline-themes'
@@ -218,6 +219,7 @@ require('telescope').setup{
 }
 require('telescope').load_extension('fzf')
 
+require("trouble").setup {}
 
 require'nvim-web-devicons'.setup({
  -- your personnal icons can go here (to override)
