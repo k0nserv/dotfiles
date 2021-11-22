@@ -10,8 +10,9 @@ CUSTOM_DESTINATIONS = {
   'brew_bundle.sh' => '$HOME/.config/brew/brew_bundle.sh',
 
   # Kitty
-  'kitty.conf' => '$HOME/.config/kitty/kitty.conf',
-  'solarized-dark.conf' => '$HOME/.config/kitty/solarized-dark.conf',
+  'kitty/kitty.conf' => '$HOME/.config/kitty/kitty.conf',
+  'kitty/solarized-dark.conf' => '$HOME/.config/kitty/solarized-dark.conf',
+  'kitty/nord.conf' => '$HOME/.config/kitty/nord.conf',
 }
 
 def destination_for_file(file)
