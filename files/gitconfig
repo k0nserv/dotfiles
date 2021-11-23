@@ -1,39 +1,39 @@
 [user]
-	name = Hugo Tunius
-	email = h@tunius.se
-	signingkey = 6F24B550BAB24CBA
+  name = Hugo Tunius
+  email = h@tunius.se
+  signingkey = 6F24B550BAB24CBA
 [core]
-	excludesfile = /Users/hugotunius/.gitignore_global
-	editor = nvim
+  excludesfile = /Users/hugotunius/.gitignore_global
+  editor = nvim
 
 [alias]
-    log = log --topo-order --decorate
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --date=short' --abbrev-commit
+  log = log --topo-order --decorate
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --date=short' --abbrev-commit
 
 [format]
-    pretty = %C(red)%h %C(green)%an \n%C(white)%s\n
+  pretty = %C(red)%h %C(green)%an \n%C(white)%s\n
 [color]
     ui = true
 [http]
-	postBuffer = 524288000
-	cookiefile = /Users/hugotunius/.gitcookies
+  postBuffer = 524288000
+  cookiefile = /Users/hugotunius/.gitcookies
 [commit]
-    template = ~/.gitmessage
-    gpgSign = true
+  template = ~/.gitmessage
+  gpgSign = true
 [secrets]
-	patterns = <.*(pass|Pass|PASS).*>[a-zA-Z0-9]*</.*(pass|Pass|PASS).*>
-	patterns = "Password=[a-zA-Z0-9]*(;|<)"
-	patterns = (-----(\\bBEGIN\\b) (\\bRSA|EC|PGP\\b) (\\bPRIVATE KEY\\b)( BLOCK)?-----)
-	patterns = .*pass.*\\s*=\\s*(\"|\\')[a-zA-Z0-9]*(\"|\\')$
+  patterns = <.*(pass|Pass|PASS).*>[a-zA-Z0-9]*</.*(pass|Pass|PASS).*>
+  patterns = "Password=[a-zA-Z0-9]*(;|<)"
+  patterns = (-----(\\bBEGIN\\b) (\\bRSA|EC|PGP\\b) (\\bPRIVATE KEY\\b)( BLOCK)?-----)
+  patterns = .*pass.*\\s*=\\s*(\"|\\')[a-zA-Z0-9]*(\"|\\')$
 [hub]
 [gpg]
-	program = gpg
+  program = gpg
 [pager]
-       diff = diff-so-fancy | less --tabs=1,5 -RFX
-       show = diff-so-fancy | less --tabs=1,5 -RFX
-[includeIf "gitdir/i:~/Code/Work/"]
-  path = "work.gitconfig"
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
+[include]
+  path = ".local.gitconfig"
 [pull]
-	ff = only
+  ff = only
 [init]
-	defaultBranch = main
+  defaultBranch = main
