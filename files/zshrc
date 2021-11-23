@@ -68,7 +68,7 @@ export ZDOTDIR=$HOME
 export PIP_REQUIRE_VIRTUALENV=true
 
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
-export ZSH_PLUGINS="zsh-nvm npm zsh-syntax-highlighting git vagrant bundler osx colored-man-pages vi-mode docker"
+export ZSH_PLUGINS="zsh-nvm npm zsh-syntax-highlighting git vagrant bundler macos colored-man-pages vi-mode docker"
 if [ -f ~/.zsh_local ]; then
     source ~/.zsh_local
 fi
