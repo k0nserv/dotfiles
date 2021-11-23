@@ -66,7 +66,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'rose-pine/neovim'
 vim.call('plug#end')
 
-vim.opt.shell='/usr/local/bin/zsh'
+vim.opt.shell='/bin/zsh'
 vim.opt.encoding = 'utf8'
 vim.opt.swapfile = false
 
