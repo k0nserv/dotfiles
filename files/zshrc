@@ -68,7 +68,7 @@ export ZDOTDIR=$HOME
 export PIP_REQUIRE_VIRTUALENV=true
 
 # Explicitly before plugins to allow ~/.zsh_local to append plugins
-export ZSH_PLUGINS="zsh-nvm npm zsh-syntax-highlighting git vagrant bundler macos colored-man-pages vi-mode docker"
+export ZSH_PLUGINS="npm zsh-autosuggestions zsh-syntax-highlighting git vagrant bundler macos colored-man-pages vi-mode docker"
 if [ -f ~/.zsh_local ]; then
     source ~/.zsh_local
 fi
@@ -124,12 +124,11 @@ function browse-crate() {
 
   if [ "$#" -eq 1 ]
   then
-    crate_path=`FZF_DEFAULT_COMMAND="fd -d 1 \"$crate-[\d\.]\" $crates_base_path" fzf -1`
+    crate_path=`FZF_DEFAULT_COMMAND="fd -d 1 \"$crate-[\d\.]\" $crates_base_path" fzf-tmux -1`
   else 
     crate_path="$crates_base_path/$crate-$2"
   fi
 
-  echo $crate_path
   if [ -n "$crate_path" ] 
   then
     nvim -c ":cd $crate_path" "$crate_path"
@@ -152,7 +151,7 @@ if [ -e ~/.fzf ]; then
 fi
 
 # fzf + ag configuration
-if _has fzf && _has ag; then
+if _has fzf && _has rg; then
   export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -161,6 +160,8 @@ if _has fzf && _has ag; then
   --color info:108,prompt:109,spinner:108,pointer:168,marker:168
   '
 fi
+FZF_TMUX_OPTS='-d 20%'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
 export GPG_TTY=$(tty)
