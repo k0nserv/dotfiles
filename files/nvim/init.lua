@@ -9,6 +9,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', vim.fn.stdpath('data') .. '/plugged')
 -- Language support
 Plug 'editorconfig/editorconfig-vim'
+Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
 
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'vim-scripts/indentpython.vim'
@@ -92,7 +93,8 @@ vim.opt.relativenumber = true
 vim.go.t_Co = '256'
 vim.opt.background='dark'
 vim.opt.termguicolors = true
-vim.opt.foldmethod = 'syntax'
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr="nvim_tresitter#foldexpr()"
 vim.opt.syntax = 'on'
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
@@ -253,6 +255,20 @@ require'nvim-tree'.setup({
     }
   }
 })
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"rust", "lua", "typescript"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = {}, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = {},  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
