@@ -256,7 +256,9 @@ require'nvim-tree'.setup({
   }
 })
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"rust", "lua", "typescript"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = {
+    "rust", "lua", "typescript", "cpp", "c", "css", "html", "javascript", "markdown"
+  }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {}, -- List of parsers to ignore installing
   highlight = {
@@ -310,16 +312,16 @@ cmp.setup {
   },
 }
 
+local servers = { 'rust_analyzer', 'tsserver', 'gopls', 'clangd' }
 local nvim_lsp = require('lspconfig')
-nvim_lsp.rust_analyzer.setup{}
-nvim_lsp.tsserver.setup{}
-nvim_lsp.gopls.setup{}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  client.resolved_capabilities.document_formatting = false
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -343,6 +345,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts) 
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts) 
   buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
+  buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
+  buf_set_keymap('n', 'gi', ":lua require'telescope.builtin'.lsp_implementations()<CR>", opts)
   buf_set_keymap('n', '<leader>ld', ":lua require'telescope.builtin'.lsp_document_symbols()<CR>", opts)
   buf_set_keymap('n', '<leader>lw', ":lua require'telescope.builtin'.lsp_workspace_symbols()<CR>", opts)
   -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
@@ -351,7 +355,6 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'rust_analyzer', 'tsserver', 'gopls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -360,6 +363,42 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+local prettierd = {
+  formatCommand = 'prettierd "${INPUT}"',
+  formatStdin = true,
+}
+
+local languages = {
+  css= { prettierd },
+  html = { prettierd },
+  javascript = { prettierd },
+  javascriptreact = { prettierd },
+  json = { prettierd },
+  markdown = { prettierd },
+  scss = { prettierd },
+  typescript= { prettierd },
+  typescriptreact= { prettierd },
+  yaml = { prettierd }
+}
+
+nvim_lsp.efm.setup {
+  filetypes = vim.tbl_keys(languages),
+  init_options = { documentFormatting = true },
+  settings = {
+    languages = languages,
+    rootMarkers = { ".git/", "package.json" },
+  },
+  flags = {
+    debounce_text_changes = 150,
+  },
+}
+vim.cmd([[autocmd! BufWritePre *.ts :lua vim.lsp.buf.formatting_seq_sync()]])
+vim.cmd([[autocmd! BufWritePre *.tsx :lua vim.lsp.buf.formatting_seq_sync()]])
+vim.cmd([[autocmd! BufWritePre *.js :lua vim.lsp.buf.formatting_seq_sync()]])
+vim.cmd([[autocmd! BufWritePre *.css :lua vim.lsp.buf.formatting_seq_sync()]])
+vim.cmd([[autocmd! BufWritePre *.json :lua vim.lsp.buf.formatting_seq_sync()]])
+
 ------------------------------------------
 -- Key maps
 ------------------------------------------
