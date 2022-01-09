@@ -76,9 +76,9 @@ function resize_to_ratio(ratio, screen, win, vertical, leading)
     frame.w = width
 
     if leading then
-      frame.x = 0
+      frame.x = screen_frame.x
     else
-      frame.x = screen_frame.w - width
+      frame.x = screen_frame.x + screen_frame.w - width
     end
   end
 
