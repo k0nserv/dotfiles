@@ -1,5 +1,24 @@
 -- vim: syntax=lua
 
+-- Various helpers(Should move this elsewhere)
+-- Merge two tables, overwriting values in `t1` for keys that exists in `t2.
+-- Borrowed from https://stackoverflow.com/questions/1283388/how-to-merge-two-tables-overwriting-the-elements-which-are-in-both
+function merge_tables(t1, t2)
+    for k,v in pairs(t2) do
+        if type(v) == "table" then
+            if type(t1[k] or false) == "table" then
+                tableMerge(t1[k] or {}, t2[k] or {})
+            else
+                t1[k] = v
+            end
+        else
+            t1[k] = v
+        end
+    end
+    return t1
+end
+
+
 -- Be eMproved
 vim.opt.compatible = false
 vim.g.filetype = 'off'
@@ -181,7 +200,7 @@ function goyo_enter()
   vim.opt.foldmethod = 'manual'
 
  
-  require('rose-pine.functions').select_variant('dawn')
+  require('rose-pine').set('dawn')
   vim.cmd('Limelight')
 end
 
@@ -212,6 +231,11 @@ require'nvim-tmux-navigation'.setup {
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
+    preview = {
+      -- Temporary fix for terrible performance with find files.
+      -- See: https://github.com/nvim-telescope/telescope.nvim/issues/1616
+      treesitter = false,
+    },
     mappings = {
       i = {
         ["<esc>"] = actions.close
@@ -312,7 +336,6 @@ cmp.setup {
   },
 }
 
-local servers = { 'rust_analyzer', 'tsserver', 'gopls', 'clangd' }
 local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys
@@ -353,15 +376,36 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+local servers = { 
+  rust_analyzer= {
+    settings= {
+      ['rust-analyzer']= {
+        assist= {
+          importGranularity= "module"
+        },
+        cargo= {
+          allFeatures= true,
+        }
+      }
+    }
+  }, 
+  tsserver= {}, 
+  gopls= {}, 
+  clangd= {}
+}
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+for lsp, extra in pairs(servers) do
+  local config = {
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
-    }
+    },
   }
+
+  local final_config = merge_tables(config, extra)
+
+  nvim_lsp[lsp].setup(final_config)
 end
 
 local prettierd = {
