@@ -1,22 +1,5 @@
 -- vim: syntax=lua
-
--- Various helpers(Should move this elsewhere)
--- Merge two tables, overwriting values in `t1` for keys that exists in `t2.
--- Borrowed from https://stackoverflow.com/questions/1283388/how-to-merge-two-tables-overwriting-the-elements-which-are-in-both
-function merge_tables(t1, t2)
-    for k,v in pairs(t2) do
-        if type(v) == "table" then
-            if type(t1[k] or false) == "table" then
-                tableMerge(t1[k] or {}, t2[k] or {})
-            else
-                t1[k] = v
-            end
-        else
-            t1[k] = v
-        end
-    end
-    return t1
-end
+require "utils"
 
 
 -- Be eMproved
@@ -46,15 +29,14 @@ Plug 'jparise/vim-graphql'
 
 -- LSP
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp-status.nvim'
 Plug('hrsh7th/nvim-cmp', {branch= 'main'})
 Plug('hrsh7th/cmp-nvim-lsp', {branch= 'main'})
 Plug('hrsh7th/cmp-buffer', {branch= 'main'})
 Plug('folke/lsp-colors.nvim', {branch= 'main'})
 Plug 'folke/trouble.nvim'
 
--- Airline
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -82,17 +64,18 @@ Plug 'junegunn/limelight.vim'
 
 
 -- Color Schemes
-Plug 'arcticicestudio/nord-vim'
 Plug 'rose-pine/neovim'
+Plug('f-person/auto-dark-mode.nvim', {commit= '9a7515c180c73ccbab9fce7124e49914f88cd763'})
 vim.call('plug#end')
 
 vim.opt.shell='/bin/zsh'
 vim.opt.encoding = 'utf8'
 vim.opt.swapfile = false
 
-vim.cmd('colorscheme nord')
 vim.g.nord_italic = 1
 vim.g.nord_italic_comments = 1
+
+update_colors()
 
 vim.cmd([[
   hi! LspDiagnosticsDefaultError guifg=#dc322f gui=bold,standout
@@ -110,7 +93,6 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.go.t_Co = '256'
-vim.opt.background='dark'
 vim.opt.termguicolors = true
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr="nvim_tresitter#foldexpr()"
@@ -200,7 +182,8 @@ function goyo_enter()
   vim.opt.foldmethod = 'manual'
 
  
-  require('rose-pine').set('dawn')
+  require('rose-pine').setup({})
+  vim.cmd('colorscheme rose-pine')
   vim.cmd('Limelight')
 end
 
@@ -214,7 +197,7 @@ function goyo_leave()
   vim.opt.background = 'dark'
   vim.opt.foldmethod = 'syntax'
 
-  vim.cmd('colorscheme nord')
+  update_colors()
   vim.cmd('Limelight!')
 end
 
@@ -222,6 +205,28 @@ vim.cmd('autocmd! User GoyoEnter nested :lua goyo_enter()')
 vim.cmd('autocmd! User GoyoLeave nested :lua goyo_leave()')
 
 vim.cmd('command! CargoCheck lua require("FTerm").scratch({ cmd = {"cargo", "check"} })')
+
+-- auto-dark-mode
+local auto_dark_mode = require('auto-dark-mode')
+
+auto_dark_mode.setup({
+  update_interval = 30000,
+  set_dark_mode = function()
+    set_dark_colors()
+  end,
+  set_light_mode = function()
+    set_light_colors()
+  end,
+})
+auto_dark_mode.init()
+
+-- lualine
+require('lualine').setup({
+  sections= {
+    lualine_y = {},
+    lualine_x = {"require'lsp-status'.status()", 'filetype'},
+  }
+})
 
 -- tmux-navigation
 require'nvim-tmux-navigation'.setup {
@@ -336,6 +341,9 @@ cmp.setup {
   },
 }
 
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+
 local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys
@@ -343,6 +351,7 @@ local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  lsp_status.on_attach(client)
 
   client.resolved_capabilities.document_formatting = false
 
@@ -364,7 +373,7 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', ":lua require'telescope.builtin'.lsp_code_actions()<CR>", opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts) 
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts) 
   buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
@@ -495,5 +504,4 @@ map('n', '<F8>', ':NvimTreeToggle<CR>', opts)
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 map('n', '<leader>bb', '<cmd>Telescope buffers<cr>', opts)
-
 
