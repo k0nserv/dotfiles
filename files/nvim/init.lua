@@ -55,7 +55,8 @@ Plug 'alexghergh/nvim-tmux-navigation'
 Plug 'numtostr/FTerm.nvim'
 
 -- Telescope
-Plug 'nvim-lua/plenary.nvim'
+-- Remove this fixed commit when https://github.com/nvim-lua/plenary.nvim/issues/346 is resolved.
+Plug('nvim-lua/plenary.nvim', {commit= '0d660152000a40d52158c155625865da2aa7aa1b'})
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do']= 'make' })
 
@@ -224,6 +225,10 @@ auto_dark_mode.init()
 require('lualine').setup({
   sections= {
     lualine_y = {},
+    lualine_c = {{
+      'filename',
+      path = 1,
+    }},
     lualine_x = {"require'lsp-status'.status()", 'filetype'},
   }
 })
