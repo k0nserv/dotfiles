@@ -33,6 +33,8 @@ Plug 'nvim-lua/lsp-status.nvim'
 Plug('hrsh7th/nvim-cmp', {branch= 'main'})
 Plug('hrsh7th/cmp-nvim-lsp', {branch= 'main'})
 Plug('hrsh7th/cmp-buffer', {branch= 'main'})
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 Plug('folke/lsp-colors.nvim', {branch= 'main'})
 Plug 'folke/trouble.nvim'
 
@@ -50,7 +52,6 @@ Plug 'tpope/vim-repeat'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'rizzatti/dash.vim'
-Plug 'glepnir/dashboard-nvim'
 Plug 'alexghergh/nvim-tmux-navigation'
 Plug 'numtostr/FTerm.nvim'
 
@@ -58,6 +59,7 @@ Plug 'numtostr/FTerm.nvim'
 -- Remove this fixed commit when https://github.com/nvim-lua/plenary.nvim/issues/346 is resolved.
 Plug('nvim-lua/plenary.nvim', {commit= '0d660152000a40d52158c155625865da2aa7aa1b'})
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do']= 'make' })
 
 Plug 'junegunn/goyo.vim'
@@ -95,8 +97,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.go.t_Co = '256'
 vim.opt.termguicolors = true
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr="nvim_tresitter#foldexpr()"
+vim.opt.foldmethod = 'indent'
 vim.opt.syntax = 'on'
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
@@ -111,6 +112,8 @@ vim.cmd([[
     autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
   augroup END
 ]])
+-- Spell checking for git commits
+vim.cmd([[autocmd FileType gitcommit setlocal spell]])
 
 vim.g.filetype = 'plugin indent on'
 vim.opt.backspace='indent,eol,start'
@@ -153,24 +156,8 @@ vim.g['airline#extensions#tabline#buffer_idx_mode'] = 1
 vim.g.rustfmt_autosave = 1
 vim.g.rustfmt_emit_files = 1
 vim.g.rust_cargo_check_tests = 1
+vim.g.rust_recommended_style = 1
 
--- nvim-tree
--- List of filenames that gets highlighted with NvimTreeSpecialFile
-vim.g.nvim_tree_special_files = { 
-  ['README.md']= 1, 
-  Makefile= 1, 
-  MAKEFILE= 1,
-  ['package.json']= 1,
-  ['Cargo.toml']= 1,
-  ['.gitignore']= 1
-} 
-vim.g.nvim_tree_show_icons = {
-    git= 1,
-    folders= 1,
-    files= 1,
-    folder_arrows= 0,
-}
-vim.g.nvim_tree_disable_window_picker = 0
 function goyo_enter()
   vim.opt.spell = true
   vim.opt.autoindent = false
@@ -196,7 +183,7 @@ function goyo_leave()
   vim.opt.showcmd = true
   vim.opt.complete:remove('s')
   vim.opt.background = 'dark'
-  vim.opt.foldmethod = 'syntax'
+  vim.opt.foldmethod = 'indent'
 
   update_colors()
   vim.cmd('Limelight!')
@@ -257,8 +244,15 @@ require('telescope').setup{
       sort_mru = true,
       sort_lastused = true,
     }
-  }
+  },
+  extensions = {
+    ["ui-select"] = {
+      -- require("telescope.themes").get_dropdown {
+      -- }
+    }
+  },
 }
+require("telescope").load_extension("ui-select")
 require('telescope').load_extension('fzf')
 
 require("trouble").setup {}
@@ -287,11 +281,30 @@ require'nvim-tree'.setup({
         { key = {"C"}, cb = tree_cb("cd") }
       }
     }
-  }
+  },
+  renderer = {
+    special_files = {
+      'README.md',
+      'Makefile',
+      'MAKEFILE',
+      'package.json',
+      'Cargo.toml',
+      '.gitignore'
+    },
+    icons = {
+      show = {
+          git= true,
+          folder= true,
+          file= true,
+          folder_arrow= false,
+        }
+      }
+    },
 })
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    "rust", "lua", "typescript", "cpp", "c", "css", "html", "javascript", "markdown", "go"
+    "rust", "lua", "typescript", "cpp", "c", "css", "html", "javascript", "markdown", "markdown_inline", "go"
   }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {}, -- List of parsers to ignore installing
@@ -344,6 +357,11 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'path' }
   },
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end
+  },
 }
 
 local lsp_status = require('lsp-status')
@@ -377,7 +395,7 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<leader>ca', ":lua require'telescope.builtin'.lsp_code_actions()<CR>", opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts) 
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts) 
