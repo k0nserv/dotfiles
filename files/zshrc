@@ -29,6 +29,7 @@ alias gpcfl="git push origin \$(current_branch) --force-with-lease"
 function goops { git add -A "$@" && git commit --amend --no-edit && gpcfl }
 alias gbr="git branch -r"
 alias gbrm="git branch --merged | grep -v \"\*\" | xargs -n 1 git branch -d"
+alias copy-pr-link="gh pr view --json url --jq '.url' | pbcopy"
 alias tracert="traceroute"
 alias grep="grep --color=always"
 alias vimrc='$EDITOR ~/.vimrc'
@@ -82,7 +83,7 @@ alias d='$DOCKER'
 alias dc='$COMPOSE'
 
 function mkdataenv() {
-  mkvirtualenv --python /usr/local/bin/python3 $1
+  mkvirtualenv --python `pyenv which python` $1
   workon $1
   mkdir "$1"
   cd $1
