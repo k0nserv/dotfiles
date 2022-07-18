@@ -161,8 +161,8 @@ if _has fzf && _has rg; then
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_DEFAULT_OPTS='
-  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
-  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
+  --color fg:7,bg:0,hl:3,fg+:11,bg+:8,hl+:11
+  --color info:4,prompt:4,spinner:4,pointer:1,marker:1
   '
 fi
 FZF_TMUX_OPTS='-d 20%'
