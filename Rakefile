@@ -1,12 +1,20 @@
 require 'pathname'
 
-def sync_folder(folder, to, recursive=false)
+def sync_folder(folder, to, **args)
+  recursive = args[:recursive] || false
+  strip_prefix = args[:strip_prefix] || []
+
   to_pathname = Pathname.new(to)
   glob = recursive ? "#{folder}/**/*" : "#{folder}/*"
   paths = Dir.glob(glob, base: 'files').filter_map do |filename|
     pathname = Pathname.new(filename)
 
     sub_path = pathname.relative_path_from(folder)
+    if strip_prefix.include?(sub_path.extname)
+      sub_path = sub_path.dirname.join(sub_path.basename(".*"))
+    end
+
+    destination = to_pathname.join(sub_path).to_s
 
     [pathname.to_s, to_pathname.join(sub_path).to_s]
   end
@@ -27,8 +35,9 @@ CUSTOM_DESTINATIONS = {
   'Brewfile.global' => '~/.config/brew/Brewfile.global',
   'brew_bundle.sh' => '~/.config/brew/brew_bundle.sh',
 
-  **sync_folder('nvim', '~/.config/nvim', recursive=true),
-  **sync_folder('kitty', '~/.config/kitty')
+  **sync_folder('nvim', '~/.config/nvim', recursive: true),
+  **sync_folder('kitty', '~/.config/kitty'),
+  **sync_folder('bin', '~/bin', strip_prefix: ['.py'])
 }
 
 
