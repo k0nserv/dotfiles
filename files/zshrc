@@ -17,6 +17,8 @@ VIRTUAL_ENV_DISABLE_PROMPT=true
 
 export EDITOR=nvim
 
+export PATH="$PATH:$HOME/bin"
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
