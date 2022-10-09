@@ -121,6 +121,9 @@ vim.opt.backspace='indent,eol,start'
 -- Hidden buffers
 vim.opt.hidden = true
 
+-- Always spell check, since NeoVim 0.8 this only applies to comments when using TreeSitter.
+vim.opt.spell = true
+
 -- Python
 vim.g.loaded_python_provider = 1
 vim.g.python3_host_prog = '/Users/hugotunius/Envs/nvim/bin/python3'
