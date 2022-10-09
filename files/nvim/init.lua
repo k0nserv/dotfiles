@@ -337,7 +337,6 @@ cmp.setup {
       select = true,
     },
     ['<Tab>'] = function(fallback)
-      print(vim.fn.pumvisible() ~= 1 or cmp.visible())
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn.pumvisible() ~= 0 then
@@ -400,8 +399,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts) 
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts) 
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
   buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
   buf_set_keymap('n', 'gi', ":lua require'telescope.builtin'.lsp_implementations()<CR>", opts)
