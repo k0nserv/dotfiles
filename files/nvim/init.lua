@@ -408,31 +408,53 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-local servers = { 
+function on_init(client)
+    local path = client.workspace_folders[1].name
+    local lsp_settings = path .. "/.lsp-settings.json"
+
+    if not file_exists(lsp_settings) then return true end
+    local parsed = vim.json.decode(file_read(lsp_settings))
+
+    local extra_settings = parsed[client.name]
+
+    if extra_settings == nil then return true end
+
+    client.config.settings = merge_tables(client.config.settings, extra_settings)
+    client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+
+    return true
+end
+
+local servers = {
   rust_analyzer= {
     settings= {
       ['rust-analyzer']= {
+        checkOnSave = {
+            allFeatures= true,
+            extraArgs= {"--all-features"},
+        },
         assist= {
           importGranularity= "module"
         },
         cargo= {
           allFeatures= true,
-        }
+        },
       }
     }
-  }, 
-  tsserver= {}, 
-  gopls= {}, 
+  },
+  tsserver= {},
+  gopls= {},
   clangd= {}
 }
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 for lsp, extra in pairs(servers) do
   local config = {
-    on_attach = on_attach,
+    on_attach= on_attach,
     flags = {
       debounce_text_changes = 150,
     },
+    on_init=on_init,
   }
 
   local final_config = merge_tables(config, extra)
