@@ -175,7 +175,7 @@ function goyo_enter()
   vim.opt.background = 'light'
   vim.opt.foldmethod = 'manual'
 
- 
+
   require('rose-pine').setup({})
   vim.cmd('colorscheme rose-pine')
   vim.cmd('Limelight')
@@ -430,13 +430,42 @@ function on_init(client)
     return true
 end
 
+function rust_open_docs()
+  vim.lsp.buf_request(vim.api.nvim_get_current_buf(), 'experimental/externalDocs', vim.lsp.util.make_position_params(), function(err, url)
+    if err then
+      error(tostring(err))
+    else
+      local is_std = url:find("doc.rust-lang.org", 0, true)
+
+      if is_std then
+        -- Something from the standard library, open with dash instead.
+        vim.cmd(':Dash!')
+      else
+        -- External crate
+        vim.fn['netrw#BrowseX'](url, 0)
+      end
+    end
+  end)
+end
+
 local servers = {
   rust_analyzer= {
+    custom_attach= function(client, bufnr)
+      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+      local opts = { noremap=true, silent=true }
+
+      vim.api.nvim_create_user_command(
+        'RustOpenDocs',
+        rust_open_docs,
+        { desc= 'Open documentation for the symbol under the cursor in default browser' }
+      )
+
+      buf_set_keymap('n', '<leader>d', '<cmd>RustOpenDocs<CR>', opts)
+    end,
     settings= {
       ['rust-analyzer']= {
         checkOnSave = {
-            allFeatures= true,
-            extraArgs= {"--all-features"},
+            allFeatures= true
         },
         assist= {
           importGranularity= "module"
@@ -454,8 +483,23 @@ local servers = {
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 for lsp, extra in pairs(servers) do
+  local custom_attach = nil
+
+  if extra.custom_attach ~= nil then
+    custom_attach = extra.custom_attach
+    -- Set it to nil so the server doesn't explode when trying to serialize a function
+    extra.custom_attach = nil
+  end
+
+
   local config = {
-    on_attach= on_attach,
+    on_attach= function(client, bufnr)
+      if custom_attach ~= nil then
+        custom_attach(client, bufnr)
+      end
+
+      on_attach(client, bufnr)
+    end,
     flags = {
       debounce_text_changes = 150,
     },
