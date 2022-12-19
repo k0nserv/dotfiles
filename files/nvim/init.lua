@@ -381,7 +381,7 @@ local on_attach = function(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   lsp_status.on_attach(client)
 
-  client.resolved_capabilities.document_formatting = false
+  client.server_capabilities.document_formatting = false
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
