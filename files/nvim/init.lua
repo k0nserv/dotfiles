@@ -101,6 +101,9 @@ vim.opt.foldmethod = 'indent'
 vim.opt.syntax = 'on'
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.scrolloff = 8
 
 vim.opt.ruler = true
 vim.opt.colorcolumn = '120'
