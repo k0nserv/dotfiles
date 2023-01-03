@@ -26,6 +26,8 @@ Plug('hrsh7th/cmp-nvim-lsp', {branch= 'main'})
 Plug('hrsh7th/cmp-buffer', {branch= 'main'})
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'rafamadriz/friendly-snippets'
+
 Plug('folke/lsp-colors.nvim', {branch= 'main'})
 Plug 'folke/trouble.nvim'
 
@@ -136,6 +138,8 @@ vim.g.EditorConfig_exclude_patterns = {'fugitive://.*'}
 
 -- Rust
 vim.g.rustfmt_autosave = 1
+
+vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/snippets'
 
 function goyo_enter()
   vim.opt.spell = true
@@ -328,6 +332,7 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp' },
+    { name = 'vsnip' },
     { name = 'path' }
   },
   snippet = {
@@ -484,6 +489,7 @@ local prettierd = {
   formatStdin = true,
 }
 
+
 local languages = {
   css= { prettierd },
   html = { prettierd },
@@ -566,6 +572,13 @@ map('n', '<F8>', ':NvimTreeToggle<CR>', opts)
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 map('n', '<leader>bb', '<cmd>Telescope buffers<cr>', opts)
+
+
+-- vnsip
+vim.cmd("imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)' : '<Tab>'")
+vim.cmd("smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)' : '<Tab>'")
+vim.cmd("imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<Tab>'")
+vim.cmd("smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<Tab>'")
 
 -- Match characters
 -- The <ESC>i bit here has the effect of putting the insert mode cursor between
