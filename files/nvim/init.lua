@@ -13,17 +13,8 @@ vim.call('plug#begin', vim.fn.stdpath('data') .. '/plugged')
 Plug 'editorconfig/editorconfig-vim'
 Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
 
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'vim-ruby/vim-ruby'
-Plug 'keith/swift.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'plasticboy/vim-markdown'
 Plug 'rust-lang/rust.vim'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'udalov/kotlin-vim'
-Plug 'uarun/vim-protobuf'
 Plug('fatih/vim-go', {['do']= ':GoUpdateBinaries'})
 Plug 'jparise/vim-graphql'
 
@@ -143,25 +134,8 @@ vim.opt.modeline = false
 -- Editor config
 vim.g.EditorConfig_exclude_patterns = {'fugitive://.*'}
 
--- vim-jsx
-vim.g.jsx_ext_required = 0
-
--- vim-airline
-vim.g.airline_powerline_fonts = 1
-if (not vim.g.airline_symbols) then
-      vim.g.airline_symbols = vim.empty_dict()
-end
-vim.g.airline_symbols.space = "\160"
-vim.g['airline#extensions#tabline#enabled'] = 1
-vim.g['airline#extensions#tabline#show_buffers'] = 1
-vim.opt.laststatus = 2
-vim.g['airline#extensions#tabline#buffer_idx_mode'] = 1
-
 -- Rust
 vim.g.rustfmt_autosave = 1
-vim.g.rustfmt_emit_files = 1
-vim.g.rust_cargo_check_tests = 1
-vim.g.rust_recommended_style = 1
 
 function goyo_enter()
   vim.opt.spell = true
@@ -233,11 +207,6 @@ require'nvim-tmux-navigation'.setup {
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
-    preview = {
-      -- Temporary fix for terrible performance with find files.
-      -- See: https://github.com/nvim-telescope/telescope.nvim/issues/1616
-      treesitter = false,
-    },
     mappings = {
       i = {
         ["<esc>"] = actions.close
@@ -309,7 +278,7 @@ require'nvim-tree'.setup({
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    "rust", "lua", "typescript", "cpp", "c", "css", "html", "javascript", "markdown", "markdown_inline", "go"
+    "rust", "lua", "typescript", "cpp", "c", "css", "html", "javascript", "markdown", "markdown_inline", "go", "scss"
   }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {}, -- List of parsers to ignore installing
