@@ -56,8 +56,7 @@ Plug 'alexghergh/nvim-tmux-navigation'
 Plug 'numtostr/FTerm.nvim'
 
 -- Telescope
--- Remove this fixed commit when https://github.com/nvim-lua/plenary.nvim/issues/346 is resolved.
-Plug('nvim-lua/plenary.nvim', {commit= '0d660152000a40d52158c155625865da2aa7aa1b'})
+Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do']= 'make' })
@@ -405,10 +404,10 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
-  buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
   buf_set_keymap('n', 'gi', ":lua require'telescope.builtin'.lsp_implementations()<CR>", opts)
   buf_set_keymap('n', '<leader>ld', ":lua require'telescope.builtin'.lsp_document_symbols()<CR>", opts)
   buf_set_keymap('n', '<leader>lw', ":lua require'telescope.builtin'.lsp_workspace_symbols()<CR>", opts)
+  buf_set_keymap('n', '<leader>lW', ":lua require'telescope.builtin'.lsp_workspace_symbols({symbols={\"functions\"}})<CR>", opts)
   -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
@@ -599,3 +598,12 @@ map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 map('n', '<leader>bb', '<cmd>Telescope buffers<cr>', opts)
 
+-- Match characters
+-- The <ESC>i bit here has the effect of putting the insert mode cursor between
+-- the pair of characters.
+map('i', '(', '()<ESC>i', opts)
+map('i', '[', '[]<ESC>i', opts)
+map('i', '"', '""<ESC>i', opts)
+-- map('i', "'", "''<ESC>i", opts) This mapping is annoying with Rust lifetimes 
+map('i', '{', '{}<ESC>i', opts)
+map('i', '`', '``<ESC>i', opts)
