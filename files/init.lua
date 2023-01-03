@@ -60,7 +60,7 @@ end
 
 function resize_to_ratio(ratio, screen, win, vertical, leading)
   local screen_frame = screen:frame()
-  local frame = screen:frame()
+  local frame = win:frame()
 
   if vertical then
     height = frame.h * ratio
