@@ -451,7 +451,9 @@ local servers = {
   },
   tsserver= {},
   gopls= {},
-  clangd= {}
+  clangd= {},
+  pylsp={}
+
 }
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
@@ -489,6 +491,10 @@ local prettierd = {
   formatStdin = true,
 }
 
+local black = {
+  formatCommand = 'black --quiet -',
+  formatStdin = true,
+}
 
 local languages = {
   css= { prettierd },
@@ -500,7 +506,8 @@ local languages = {
   scss = { prettierd },
   typescript= { prettierd },
   typescriptreact= { prettierd },
-  yaml = { prettierd }
+  yaml = { prettierd },
+  python = { black }
 }
 
 nvim_lsp.efm.setup {

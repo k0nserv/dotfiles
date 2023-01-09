@@ -34,6 +34,7 @@ CUSTOM_DESTINATIONS = {
   'gpg.conf' => '~/.gnupg/gpg.conf',
   'Brewfile.global' => '~/.config/brew/Brewfile.global',
   'brew_bundle.sh' => '~/.config/brew/brew_bundle.sh',
+  'pycodestyle.toml' => '~/.config/pycodestyle',
 
   **sync_folder('nvim', '~/.config/nvim', recursive: true),
   **sync_folder('kitty', '~/.config/kitty'),
