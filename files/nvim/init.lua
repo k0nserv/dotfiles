@@ -526,11 +526,12 @@ vim.cmd([[autocmd! BufWritePre *.tsx :lua vim.lsp.buf.formatting_seq_sync()]])
 vim.cmd([[autocmd! BufWritePre *.js :lua vim.lsp.buf.formatting_seq_sync()]])
 vim.cmd([[autocmd! BufWritePre *.css :lua vim.lsp.buf.formatting_seq_sync()]])
 vim.cmd([[autocmd! BufWritePre *.json :lua vim.lsp.buf.formatting_seq_sync()]])
+vim.cmd([[autocmd! BufWritePre *.py :lua vim.lsp.buf.formatting_seq_sync()]])
 
 ------------------------------------------
 -- Key maps
 ------------------------------------------
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 vim.g.mapleader = ' '
@@ -581,18 +582,64 @@ map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 map('n', '<leader>bb', '<cmd>Telescope buffers<cr>', opts)
 
 
--- vnsip
 vim.cmd("imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)' : '<Tab>'")
 vim.cmd("smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)' : '<Tab>'")
 vim.cmd("imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<Tab>'")
 vim.cmd("smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<Tab>'")
 
+-- Utility to allow matching up paired characters and intelligently
+-- handling moving forward.
+--
+-- ## Examples
+-- Given `vim.keymap.set('i', ')', make_matcher(')', ')'), opts)`.
+--
+--    Hello($)
+-- Typing `)` will move left resulting `Hello()$`
+--
+-- In other cases `)` will be inserted like normal.
+function make_matcher(match, to_insert)
+  return function()
+    local x = vim.api.nvim_win_get_cursor(0)
+    local row, col = unpack(x)
+    local line = vim.api.nvim_get_current_line()
+
+    if (line:len() >= col + 1) then
+      local next_char = line:sub(col + 1, col + 1)
+
+      if (next_char == match) then
+        vim.api.nvim_win_set_cursor(0, { row, col +1 })
+        return
+      end
+    end
+
+    vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, {to_insert})
+
+    if (to_insert:len() == 2) then
+        vim.api.nvim_win_set_cursor(0, { row, col + 1 })
+    else
+        vim.api.nvim_win_set_cursor(0, { row, col + 2 })
+    end
+  end
+end
+
+function make_simple_matcher(char)
+  return make_matcher(char, char)
+end
+
 -- Match characters
--- The <ESC>i bit here has the effect of putting the insert mode cursor between
--- the pair of characters.
+-- The <ESC>i bit here has the effect of putting the
+-- insert mode cursor between the pair of characters.
 map('i', '(', '()<ESC>i', opts)
 map('i', '[', '[]<ESC>i', opts)
-map('i', '"', '""<ESC>i', opts)
--- map('i', "'", "''<ESC>i", opts) This mapping is annoying with Rust lifetimes 
 map('i', '{', '{}<ESC>i', opts)
-map('i', '`', '``<ESC>i', opts)
+
+-- map('i', "'", "''<ESC>i", opts) This mapping is annoying with Rust lifetimes
+
+-- Intelligent matchers for second parts of pairs and pairs composed
+-- of the same character
+map('i', ')', make_simple_matcher(')'), opts)
+map('i', ']', make_simple_matcher(']'), opts)
+map('i', '}', make_simple_matcher('}'), opts)
+map('i', '"', make_matcher('"', '""'), opts)
+map('i', '`', make_matcher('`', '``'), opts)
+
