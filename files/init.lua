@@ -63,7 +63,7 @@ function resize_to_ratio(ratio, screen, win, vertical, leading)
   local frame = win:frame()
 
   if vertical then
-    height = frame.h * ratio
+    height = screen_frame.h * ratio
     frame.h = height
 
     if leading then
@@ -72,7 +72,7 @@ function resize_to_ratio(ratio, screen, win, vertical, leading)
       frame.y = screen_frame.h - height
     end
   else
-    width = frame.w * ratio
+    width = screen_frame.w * ratio
     frame.w = width
 
     if leading then
