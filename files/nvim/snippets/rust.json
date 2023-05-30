@@ -20,5 +20,15 @@
       "}"
     ],
     "description": "Custom implementation of fmt::Display"
+  },
+  "oneshot": {
+    "prefix": ["oneshot"],
+    "body": ["let (${1:tx}, ${2:rx}) = oneshot::channel();"],
+    "description": "Create a oneshot channel"
+  },
+  "mpsc": {
+    "prefix": ["mpsc"],
+    "body": ["let (${1:tx}, ${2:rx}) = mpsc::channel();"],
+    "description": "Create a mpsc channel"
   }
 }
