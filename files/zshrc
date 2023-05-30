@@ -93,6 +93,7 @@ function mkdataenv() {
   workon $1
   mkdir "$1"
   cd $1
+  curl https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore > .gitignore
   pip install pandas jupyter numpy matplotlib seaborn
   pip freeze > requirements.txt
   jupyter notebook
