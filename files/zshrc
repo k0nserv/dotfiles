@@ -42,6 +42,10 @@ alias work='$EDITOR .'
 function unfuck-audio() {
   sudo kill -9 $(ps ax|grep 'coreaudio[a-z]' | awk '{print $1}')
 }
+function reset_net_sim() {
+  cat /etc/pf.conf | sudo pfctl -q -f - && sudo pfctl -E
+  sudo dnctl -f flush 
+}
 
 # Docker aliases
 COMPOSE='docker-compose'
