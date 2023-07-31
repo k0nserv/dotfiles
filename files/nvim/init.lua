@@ -253,13 +253,6 @@ require'nvim-web-devicons'.setup({
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 require'nvim-tree'.setup({
   disable_netrw = false,
-  view = {
-    mappings = {
-      list = {
-        { key = {"C"}, cb = tree_cb("cd") }
-      }
-    }
-  },
   renderer = {
     special_files = {
       'README.md',
@@ -278,6 +271,25 @@ require'nvim-tree'.setup({
         }
       }
     },
+  on_attach= function (bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+
+    -- Default mappings. Feel free to modify or remove as you wish.
+    --
+    -- BEGIN_DEFAULT_ON_ATTACH
+    api.config.mappings.default_on_attach(bufnr)
+    -- END_DEFAULT_ON_ATTACH
+
+    -- Mappings migrated from view.mappings.list
+    --
+    -- You will need to insert "your code goes here" for any mappings with a custom action_cb
+    vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+  end,
 })
 
 require'nvim-treesitter.configs'.setup {
