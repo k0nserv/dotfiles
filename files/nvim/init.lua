@@ -136,10 +136,12 @@ vim.opt.modeline = false
 -- Editor config
 vim.g.EditorConfig_exclude_patterns = {'fugitive://.*'}
 
+
+-- Snippets
+vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/snippets'
+
 -- Rust
 vim.g.rustfmt_autosave = 1
-
-vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/snippets'
 
 function goyo_enter()
   vim.opt.spell = true
