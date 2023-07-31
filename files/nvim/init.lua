@@ -465,6 +465,9 @@ local servers = {
         cargo= {
           allFeatures= true,
         },
+        procMacro= {
+          enable= true,
+        },
       }
     }
   },
