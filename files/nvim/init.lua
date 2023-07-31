@@ -300,7 +300,8 @@ require'nvim-tree'.setup({
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    "rust", "lua", "typescript", "cpp", "c", "css", "html", "javascript", "markdown", "markdown_inline", "go", "scss"
+    "rust", "lua", "typescript", "cpp", "c", "css",
+    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql"
   }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {}, -- List of parsers to ignore installing
