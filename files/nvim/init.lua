@@ -474,8 +474,10 @@ local servers = {
   tsserver= {},
   gopls= {},
   clangd= {},
-  pylsp={}
-
+  pylsp={},
+  sqlls={
+    root_dir = nvim_lsp.util.find_git_ancestor
+  },
 }
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
