@@ -151,13 +151,12 @@ function goyo_enter()
   vim.opt.showcmd = false
   vim.opt.spelllang = 'en_gb'
   vim.opt.complete:append('s')
-  vim.opt.background = 'light'
   vim.opt.foldmethod = 'manual'
-
 
   require('rose-pine').setup({})
   vim.cmd('colorscheme rose-pine')
   vim.cmd('Limelight')
+  require('lualine').hide()
 end
 
 function goyo_leave()
@@ -167,11 +166,11 @@ function goyo_leave()
   vim.opt.showmode = true
   vim.opt.showcmd = true
   vim.opt.complete:remove('s')
-  vim.opt.background = 'dark'
   vim.opt.foldmethod = 'indent'
 
   update_colors()
   vim.cmd('Limelight!')
+  require('lualine').hide({unhide=true})
 end
 
 vim.cmd('autocmd! User GoyoEnter nested :lua goyo_enter()')
