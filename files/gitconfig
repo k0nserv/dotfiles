@@ -45,7 +45,7 @@
 [gpg]
   program = gpg
 [include]
-  path = ".local.gitconfig"
+  path = "~/.local.gitconfig"
 [pull]
   ff = only
 [init]
