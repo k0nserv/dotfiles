@@ -526,6 +526,7 @@ local languages = {
   javascript = { prettierd },
   javascriptreact = { prettierd },
   json = { prettierd },
+  graphql = { prettierd },
   markdown = { prettierd },
   scss = { prettierd },
   typescript= { prettierd },
