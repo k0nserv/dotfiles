@@ -399,7 +399,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gr', ":lua require'telescope.builtin'.lsp_references()<CR>", opts)
   buf_set_keymap('n', 'gi', ":lua require'telescope.builtin'.lsp_implementations()<CR>", opts)
   buf_set_keymap('n', '<leader>ld', ":lua require'telescope.builtin'.lsp_document_symbols()<CR>", opts)
-  buf_set_keymap('n', '<leader>lw', ":lua require'telescope.builtin'.lsp_workspace_symbols()<CR>", opts)
+  buf_set_keymap('n', '<leader>lw', ":lua require'telescope.builtin'.lsp_dynamic_workspace_symbols()<CR>", opts)
   buf_set_keymap('n', '<leader>lW', ":lua require'telescope.builtin'.lsp_workspace_symbols({symbols={\"functions\"}})<CR>", opts)
   -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
@@ -467,7 +467,7 @@ local servers = {
         },
         procMacro= {
           enable= true,
-        },
+        }
       }
     }
   },
