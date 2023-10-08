@@ -60,7 +60,7 @@ Plug 'junegunn/limelight.vim'
 
 -- Color Schemes
 Plug 'rose-pine/neovim'
-Plug('f-person/auto-dark-mode.nvim', {commit= '9a7515c180c73ccbab9fce7124e49914f88cd763'})
+Plug('f-person/auto-dark-mode.nvim', {commit= '76e8d40'})
 vim.call('plug#end')
 
 vim.opt.shell='/bin/zsh'
