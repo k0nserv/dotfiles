@@ -80,6 +80,9 @@ vim.cmd([[
 ]])
 vim.cmd("autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4 nolist")
 vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank()')
+-- Disable folding in Telescope's result window.
+vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
+
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -300,8 +303,12 @@ require'nvim-tree'.setup({
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    "rust", "lua", "typescript", "cpp", "c", "css",
-    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql"
+    "rust", "lua", "typescript", "cpp", "css",
+    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql",
+
+    -- Must ensure these are installed via nvim-treesitter since they are also shipped in nvim itself.
+    -- See: https://github.com/nvim-treesitter/nvim-treesitter/issues/3092
+    "c", "lua", "vim", "vimdoc"
   }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {}, -- List of parsers to ignore installing
@@ -352,7 +359,8 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
-    { name = 'path' }
+    { name = 'path' },
+    { name = 'buffer' }
   },
   snippet = {
     expand = function(args)
@@ -546,12 +554,18 @@ nvim_lsp.efm.setup {
     debounce_text_changes = 150,
   },
 }
-vim.cmd([[autocmd! BufWritePre *.ts :lua vim.lsp.buf.format()]])
-vim.cmd([[autocmd! BufWritePre *.tsx :lua vim.lsp.buf.format()]])
-vim.cmd([[autocmd! BufWritePre *.js :lua vim.lsp.buf.format()]])
-vim.cmd([[autocmd! BufWritePre *.css :lua vim.lsp.buf.format()]])
-vim.cmd([[autocmd! BufWritePre *.json :lua vim.lsp.buf.format()]])
-vim.cmd([[autocmd! BufWritePre *.py :lua vim.lsp.buf.format()]])
+
+function efm_only(client)
+  return client.name == "efm"
+end
+
+vim.cmd([[autocmd! BufWritePre *.ts :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.tsx :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.js :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.css :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.json :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.py :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.graphql :lua vim.lsp.buf.format({filter=efm_only})]])
 
 ------------------------------------------
 -- Key maps
