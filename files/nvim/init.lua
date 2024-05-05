@@ -563,6 +563,7 @@ vim.cmd([[autocmd! BufWritePre *.ts :lua vim.lsp.buf.format({filter=efm_only})]]
 vim.cmd([[autocmd! BufWritePre *.tsx :lua vim.lsp.buf.format({filter=efm_only})]])
 vim.cmd([[autocmd! BufWritePre *.js :lua vim.lsp.buf.format({filter=efm_only})]])
 vim.cmd([[autocmd! BufWritePre *.css :lua vim.lsp.buf.format({filter=efm_only})]])
+vim.cmd([[autocmd! BufWritePre *.html :lua vim.lsp.buf.format({filter=efm_only})]])
 vim.cmd([[autocmd! BufWritePre *.json :lua vim.lsp.buf.format({filter=efm_only})]])
 vim.cmd([[autocmd! BufWritePre *.py :lua vim.lsp.buf.format({filter=efm_only})]])
 vim.cmd([[autocmd! BufWritePre *.graphql :lua vim.lsp.buf.format({filter=efm_only})]])
