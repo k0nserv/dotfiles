@@ -90,7 +90,6 @@ vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.go.t_Co = '256'
 vim.opt.termguicolors = true
 vim.opt.foldmethod = 'indent'
 vim.opt.syntax = 'on'
@@ -380,6 +379,7 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   lsp_status.on_attach(client)
+  vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
   client.server_capabilities.document_formatting = false
 
