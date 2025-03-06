@@ -34,7 +34,7 @@ alias gbrm="git branch --merged | grep -v \"\*\" | xargs -n 1 git branch -d"
 alias copy-pr-link="gh pr view --json url --jq '.url' | pbcopy"
 alias tracert="traceroute"
 alias grep="grep --color=always"
-alias vimrc='$EDITOR ~/.vimrc'
+alias vimrc='$EDITOR ~/.config/nvim/init.lua'
 alias zshrc='$EDITOR ~/.zshrc'
 alias tmuxconf='$EDITOR ~/.tmux.conf'
 alias weather='curl wttr.in/Edinburgh'
