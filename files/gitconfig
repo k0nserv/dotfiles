@@ -36,6 +36,8 @@
 [commit]
   template = ~/.gitmessage
   gpgSign = true
+[branch]
+        sort = -committerdate
 [secrets]
   patterns = <.*(pass|Pass|PASS).*>[a-zA-Z0-9]*</.*(pass|Pass|PASS).*>
   patterns = "Password=[a-zA-Z0-9]*(;|<)"
