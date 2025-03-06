@@ -6,12 +6,18 @@ require "utils"
 vim.opt.compatible = false
 vim.g.filetype = 'off'
 
+local use_copilot = os.getenv("COPILOT_ENABLED") == "true";
+
 -- Plugins
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', vim.fn.stdpath('data') .. '/plugged')
 -- Language support
 Plug 'editorconfig/editorconfig-vim'
 Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
+
+if use_copilot then
+  Plug('github/copilot.vim')
+end
 
 Plug 'rust-lang/rust.vim'
 Plug 'ekalinin/Dockerfile.vim'
@@ -97,6 +103,8 @@ vim.opt.cursorline = true
 vim.opt.cursorcolumn = false
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.smartcase = true
+vim.opt.ignorecase = true
 vim.opt.scrolloff = 8
 
 vim.opt.ruler = true
@@ -125,7 +133,6 @@ vim.opt.spell = true
 vim.g.loaded_python_provider = 1
 vim.g.python3_host_prog = '/Users/hugotunius/Envs/nvim/bin/python3'
 
-vim.opt.smartcase = true
 vim.opt.lazyredraw = true
 
 vim.opt.list = true
@@ -211,6 +218,8 @@ require('lualine').setup({
     'trouble'
   }
 })
+-- trouble
+require("trouble").setup {}
 
 -- tmux-navigation
 require'nvim-tmux-navigation'.setup {
@@ -218,11 +227,14 @@ require'nvim-tmux-navigation'.setup {
 }
 
 local actions = require('telescope.actions')
+local open_with_trouble = require("trouble.sources.telescope").open
+
 require('telescope').setup{
   defaults = {
     mappings = {
       i = {
-        ["<esc>"] = actions.close
+        ["<esc>"] = actions.close,
+        ["<c-t>"] = open_with_trouble
       },
     },
   },
@@ -240,9 +252,8 @@ require('telescope').setup{
   },
 }
 require("telescope").load_extension("ui-select")
-require('telescope').load_extension('fzf')
+--require('telescope').load_extension('fzf')
 
-require("trouble").setup {}
 
 require'nvim-web-devicons'.setup({
  -- your personnal icons can go here (to override)
@@ -302,8 +313,8 @@ require'nvim-tree'.setup({
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
-    "rust", "lua", "typescript", "cpp", "css",
-    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql",
+    "rust", "lua", "typescript", "tsx", "cpp", "css",
+    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql", "yaml",
 
     -- Must ensure these are installed via nvim-treesitter since they are also shipped in nvim itself.
     -- See: https://github.com/nvim-treesitter/nvim-treesitter/issues/3092
@@ -475,11 +486,16 @@ local servers = {
         },
         procMacro= {
           enable= true,
+        },
+        server= {
+          extraEnv= {
+            RUSTUP_TOOLCHAIN= "stable"
+          }
         }
       }
     }
   },
-  tsserver= {},
+  ts_ls= {},
   gopls= {},
   clangd= {},
   pylsp={},
@@ -620,6 +636,19 @@ map('n', '<F8>', ':NvimTreeToggle<CR>', opts)
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 map('n', '<leader>bb', '<cmd>Telescope buffers<cr>', opts)
+
+-- copilot(if enabled)
+if use_copilot then
+  -- convert to lua 
+
+  map('i', '<C-L>', 'copilot#Accept("\\<CR>")', {
+    expr = true,
+    replace_keycodes = false
+  })
+  map('i', '<C-K>', '<C-O>:Copilot<CR>', opts)
+
+  vim.g.copilot_no_tab_map = true
+end
 
 
 vim.cmd("imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)' : '<Tab>'")
