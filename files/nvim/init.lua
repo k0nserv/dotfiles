@@ -221,7 +221,7 @@ require('lualine').setup({
       path = 1,
     }},
     lualine_x = {"require'lsp-status'.status()", 'filetype'},
-    lualine_z = { 'trouble' }
+    lualine_z = { 'location', 'trouble' }
   },
   component_separators = { left = '', right = ''},
   section_separators = { left = '', right = ''},
