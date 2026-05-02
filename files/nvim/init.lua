@@ -66,8 +66,8 @@ Plug 'junegunn/limelight.vim'
 
 -- Color Schemes
 Plug 'rose-pine/neovim'
-Plug('f-person/auto-dark-mode.nvim', {commit= '76e8d40'})
 vim.call('plug#end')
+
 
 vim.opt.shell='/bin/zsh'
 vim.opt.encoding = 'utf8'
@@ -152,6 +152,33 @@ vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/snippets'
 -- Rust
 vim.g.rustfmt_autosave = 1
 
+
+-- Theme
+require("rose-pine").setup({
+  variant = 'auto'
+})
+vim.cmd("colorscheme rose-pine")
+
+-- Neovim already does this for us, but it doesn't work with rose-pine because of how it works.
+-- We borrow the code from Neovim and do our own thing.
+vim.api.nvim_create_autocmd('TermResponse', {
+  callback = function(args)
+        local resp = args.data.sequence ---@type string
+
+        local r, g, b = parseosc11(resp)
+        if r and g and b then
+          local rr = parsecolor(r)
+          local gg = parsecolor(g)
+          local bb = parsecolor(b)
+          if rr and gg and bb then
+            local luminance = (0.299 * rr) + (0.587 * gg) + (0.114 * bb)
+            local bg = luminance < 0.5 and 'dark' or 'light'
+            vim.o.background = bg
+      end
+    end
+  end
+})
+
 function goyo_enter()
   vim.opt.spell = true
   vim.opt.autoindent = false
@@ -184,22 +211,7 @@ end
 
 vim.cmd('autocmd! User GoyoEnter nested :lua goyo_enter()')
 vim.cmd('autocmd! User GoyoLeave nested :lua goyo_leave()')
-
 vim.cmd('command! CargoCheck lua require("FTerm").scratch({ cmd = {"cargo", "check"} })')
-
--- auto-dark-mode
-local auto_dark_mode = require('auto-dark-mode')
-
-auto_dark_mode.setup({
-  update_interval = 30000,
-  set_dark_mode = function()
-    set_dark_colors()
-  end,
-  set_light_mode = function()
-    set_light_colors()
-  end,
-})
-auto_dark_mode.init()
 
 -- lualine
 require('lualine').setup({
