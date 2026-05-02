@@ -13,7 +13,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', vim.fn.stdpath('data') .. '/plugged')
 -- Language support
 Plug 'editorconfig/editorconfig-vim'
-Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
+Plug('nvim-treesitter/nvim-treesitter', {branch= 'main' })
 
 if use_copilot then
   Plug('github/copilot.vim')
@@ -323,26 +323,17 @@ require'nvim-tree'.setup({
   end,
 })
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {
+vim.api.nvim_create_autocmd('FileType', { 
+  callback = function() 
+    -- Enable treesitter highlighting and disable regex syntax
+    pcall(vim.treesitter.start) 
+    -- Enable treesitter-based indentation
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" 
+  end, 
+}) 
+require('nvim-treesitter').install {  
     "rust", "lua", "typescript", "tsx", "cpp", "css",
-    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql", "yaml",
-
-    -- Must ensure these are installed via nvim-treesitter since they are also shipped in nvim itself.
-    -- See: https://github.com/nvim-treesitter/nvim-treesitter/issues/3092
-    "c", "lua", "vim", "vimdoc"
-  }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = {}, -- List of parsers to ignore installing
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = {},  -- list of language that will be disabled
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
+    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql", "yaml"
 }
 
 -- nvim-cmp setup
