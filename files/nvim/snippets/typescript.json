@@ -1,0 +1,7 @@
+{
+  "console.dir": {
+    "prefix": ["console.dir"],
+    "body": ["console.dir({$1}, { depth: null })"],
+    "description": "Debug some values using console.dir"
+  }
+}
