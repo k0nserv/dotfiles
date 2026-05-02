@@ -314,12 +314,10 @@ require'nvim-tree'.setup({
     -- BEGIN_DEFAULT_ON_ATTACH
     api.config.mappings.default_on_attach(bufnr)
     -- END_DEFAULT_ON_ATTACH
-
-    -- Mappings migrated from view.mappings.list
-    --
-    -- You will need to insert "your code goes here" for any mappings with a custom action_cb
-    vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
   end,
+  git= {
+    timeout= 1500,
+  }
 })
 
 vim.api.nvim_create_autocmd('FileType', { 
