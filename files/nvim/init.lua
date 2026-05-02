@@ -19,7 +19,6 @@ if use_copilot then
   Plug('github/copilot.vim')
 end
 
-Plug 'rust-lang/rust.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug('fatih/vim-go', {['do']= ':GoUpdateBinaries'})
 Plug 'jparise/vim-graphql'
