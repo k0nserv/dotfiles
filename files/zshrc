@@ -177,8 +177,12 @@ FZF_TMUX_OPTS='-d 20%'
 
 
 export GPG_TTY=$(tty)
-export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
-gpgconf --launch gpg-agent
+# Don't hijack SSH_AUTH_SOCK when we're inside an SSH session — the forwarded
+# agent socket (from `ssh -A`) is what we want there.
+if [ -z "$SSH_CONNECTION" ]; then
+    export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+    gpgconf --launch gpg-agent
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
