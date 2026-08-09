@@ -69,7 +69,7 @@ Plug 'rose-pine/neovim'
 vim.call('plug#end')
 
 
-vim.opt.shell='/bin/zsh'
+vim.opt.shell = vim.env.SHELL or '/bin/zsh'
 vim.opt.encoding = 'utf8'
 vim.opt.swapfile = false
 
