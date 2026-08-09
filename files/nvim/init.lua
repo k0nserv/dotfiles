@@ -331,7 +331,8 @@ vim.api.nvim_create_autocmd('FileType', {
 }) 
 require('nvim-treesitter').install {  
     "rust", "lua", "typescript", "tsx", "cpp", "css",
-    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql", "yaml"
+    "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql", "yaml",
+    "swift"
 }
 
 -- nvim-cmp setup
@@ -499,6 +500,11 @@ local servers = {
   ts_ls= {},
   gopls= {},
   clangd= {},
+  -- Ships with Xcode, /usr/bin/sourcekit-lsp resolves via xcode-select.
+  -- C/C++ is left to clangd, so the default filetypes are narrowed here.
+  sourcekit= {
+    filetypes= { 'swift', 'objc', 'objcpp' },
+  },
   pylsp={},
   sqlls={
     root_dir = nvim_lsp.util.find_git_ancestor
