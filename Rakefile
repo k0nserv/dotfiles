@@ -62,7 +62,7 @@ task :symlinks do
     from, to = [File.expand_path(from), File.expand_path(to)]
     to_folder = File.dirname(to)
 
-    unless Dir.exists?(to_folder)
+    unless Dir.exist?(to_folder)
       FileUtils.mkdir_p(to_folder)
     end
 
