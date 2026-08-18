@@ -477,7 +477,8 @@ local servers = {
     end,
     settings= {
       ['rust-analyzer']= {
-        checkOnSave = {
+        checkOnSave = true,
+        check = {
             allFeatures= true
         },
         assist= {
