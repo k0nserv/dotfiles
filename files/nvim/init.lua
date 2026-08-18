@@ -332,7 +332,7 @@ vim.api.nvim_create_autocmd('FileType', {
 require('nvim-treesitter').install {  
     "rust", "lua", "typescript", "tsx", "cpp", "css",
     "html", "javascript", "markdown", "markdown_inline", "go", "scss", "sql", "yaml",
-    "swift"
+    "swift", "just", "Dockerfile"
 }
 
 -- nvim-cmp setup
